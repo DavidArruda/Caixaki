@@ -132,7 +132,7 @@ public interface InterfaceCrud<T> extends Serializable{
 	 * @return List<?>
 	 * @throws Exception
 	 */
-	List<?> getListDinamicSQL() throws Exception;
+	List<?> getListDinamicSQL(String sql) throws Exception;
 	
 	/**
 	 * Prove classes para trabalhar com jdbc abstraido pelo spring (Maior performace)
