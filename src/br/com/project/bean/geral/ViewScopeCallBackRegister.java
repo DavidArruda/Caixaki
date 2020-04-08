@@ -1,4 +1,4 @@
-package br.com.bean.geral;
+package br.com.project.bean.geral;
 
 import java.util.HashMap;
 import java.util.Map;
