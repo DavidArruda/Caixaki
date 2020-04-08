@@ -31,6 +31,11 @@
   </error-page>
   
    <error-page>
+  	<error-code>404</error-code>
+  	<location>/error/404.jsf</location>
+  </error-page>
+  
+   <error-page>
   	<error-code>500</error-code>
   	<location>/error/error.jsf</location>
   </error-page>
@@ -41,13 +46,13 @@
   </context-param>
   
   <context-param>
-  	<param-name>com.sun.faces.allowTextChildren</param-name>
-  	<param-value>true</param-value>
+    <param-name>com.sun.faces.allowTextChildren</param-name>
+    <param-value>true</param-value>
   </context-param>
   
   <context-param>
-  	<param-name>com.sun.faces.expressionFactory</param-name>
-  	<param-value>con.sun.el.ExpressionFactoryImpl</param-value>
+    <param-name>com.sun.faces.expressionFactory</param-name>
+    <param-value>com.sun.el.ExpressionFactoryImpl</param-value>
   </context-param>
   
   <context-param>
@@ -70,6 +75,11 @@
   	<param-value>smoothness</param-value>
   </context-param>
   
+  <filter>
+  	<filter-name>PrimeFaces FileUpload Filter</filter-name>
+  	<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+  </filter>
+  
   <filter-mapping> <!-- Upload de imagens com jsf -->
   	<filter-name>PrimeFaces FileUpload Filter</filter-name>
   	<servlet-name>Faces Servlets</servlet-name>
@@ -91,8 +101,7 @@
   
   <servlet-mapping>
   	<servlet-name>Faces Servlet</servlet-name>
-  	<url-pattern>*jsf</url-pattern>
+  	<url-pattern>*.jsf</url-pattern>
   </servlet-mapping>
-  
   
 </web-app>
