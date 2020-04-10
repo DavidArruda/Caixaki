@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
@@ -25,42 +26,41 @@ import br.com.project.listener.ContextLoaderListenerCaixakiUtils;
 import br.com.project.model.classes.Entidade;
 
 /**
- * Classe filter, intercepta todas requisões feitas ao servidor, e commita ou da rollback em todas as operações do banco de dados.
- * @author deh0_
- *
+ * Responsavel por iniciar a sessão/transaction do hibernate, iterceptar as
+ * requisições/response, commit e rollback.
+ * 
+ * @author David Arruda
+ * 
  */
+@SuppressWarnings("unused")
 @WebFilter(filterName = "conexaoFilter")
 public class FilterOpenSessionInView extends DelegatingFilterProxy implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	private static SessionFactory sf;
 
-	// Executa quando a aplicação é iniciada
-	// Executa apenas uma vez
 	@Override
-	protected void initFilterBean() throws ServletException {
+	public void initFilterBean() throws ServletException {
 		sf = HibernateUtil.getSessionFactory();
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws ServletException, IOException {
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+			throws IOException, ServletException {
 
-		// JDBC do Spring
 		BasicDataSource springDataSource = (BasicDataSource) ContextLoaderListenerCaixakiUtils
-				.getBean("SpringDataSource");
+				.getBean("springDataSource");
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		PlatformTransactionManager transactionManager = new DataSourceTransactionManager(springDataSource);
 		TransactionStatus status = transactionManager.getTransaction(def);
 
 		try {
-			request.setCharacterEncoding("UTF-8"); // DEFINE CODIFICAÇÃO
 
-			// CAPTURA USUÁRIO QUE FAZ A OPERAÇÃO
-			HttpServletRequest request2 = (HttpServletRequest) request;
+			servletRequest.setCharacterEncoding("UTF-8");
 
-			HttpSession sessao = request2.getSession();
+			HttpServletRequest request = (HttpServletRequest) servletRequest;
+			HttpServletResponse response = (HttpServletResponse) servletResponse;
+			HttpSession sessao = request.getSession();
 			Entidade userLogadoSessao = (Entidade) sessao.getAttribute("userLogadoSessao");
 
 			if (userLogadoSessao != null) {
@@ -68,11 +68,8 @@ public class FilterOpenSessionInView extends DelegatingFilterProxy implements Se
 			}
 
 			sf.getCurrentSession().beginTransaction();
+			chain.doFilter(servletRequest, servletResponse);
 
-			// Antes da execução (Resquest)
-			chain.doFilter(request, response); // Executa nossa ação no servidor
-
-			// APÓS EXECUTAR AÇÃO
 			transactionManager.commit(status);
 
 			if (sf.getCurrentSession().getTransaction().isActive()) {
@@ -84,10 +81,11 @@ public class FilterOpenSessionInView extends DelegatingFilterProxy implements Se
 				sf.getCurrentSession().close();
 			}
 
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
+			servletResponse.setCharacterEncoding("UTF-8");
+			servletResponse.setContentType("text/html; charset=UTF-8");
 
 		} catch (Exception e) {
+
 			transactionManager.rollback(status);
 
 			e.printStackTrace();
@@ -95,24 +93,20 @@ public class FilterOpenSessionInView extends DelegatingFilterProxy implements Se
 			if (sf.getCurrentSession().getTransaction().isActive()) {
 				sf.getCurrentSession().getTransaction().rollback();
 			}
-
 			if (sf.getCurrentSession().isOpen()) {
 				sf.getCurrentSession().close();
 			}
-
 		} finally {
 			if (sf.getCurrentSession().isOpen()) {
 				if (sf.getCurrentSession().beginTransaction().isActive()) {
 					sf.getCurrentSession().flush();
 					sf.getCurrentSession().clear();
 				}
-
 				if (sf.getCurrentSession().isOpen()) {
 					sf.getCurrentSession().close();
 				}
 			}
+
 		}
-
 	}
-
 }
