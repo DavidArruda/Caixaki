@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 import javax.faces.bean.ApplicationScoped;
 
-import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 @ApplicationScoped //INSTANCIA UNICA PARA O PROJETO INTEIRO
-public class ContextLoaderListenerCaixakiUtils extends ContextLoader implements Serializable {
+public class ContextLoaderListenerCaixakiUtils extends ContextLoaderListener implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -18,7 +18,8 @@ public class ContextLoaderListenerCaixakiUtils extends ContextLoader implements 
 	 * @return
 	 */
 	private static WebApplicationContext getWac() {
-		return WebApplicationContextUtils.getWebApplicationContext(getCurrentWebApplicationContext().getServletContext());
+		return WebApplicationContextUtils
+				.getWebApplicationContext(getCurrentWebApplicationContext().getServletContext());
 	}
 	
 	public static Object getBean(String idNomeBean) {
