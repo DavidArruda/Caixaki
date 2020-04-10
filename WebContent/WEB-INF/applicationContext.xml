@@ -67,7 +67,7 @@
 		<property name="baselineOnMigrate" value="true" />
 		<property name="table" value="version" />
 		<property name="sqlMigrationPrefix" value="v" />
-		<property name="sqlMigrartionSeparator" value="_" />
+		<property name="sqlMigrationSeparator" value="_" />
 		<property name="encoding" value="ISO-8859-1" />
 		<property name="validateOnMigrate" value="true" />
 	</bean>
@@ -149,3 +149,4 @@
 
 	<bean id="utilFramework"
 		class="br.com.framework.utils.UtilFramework" scope="session" />
+</beans>
