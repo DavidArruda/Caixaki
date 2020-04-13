@@ -149,4 +149,14 @@
 
 	<bean id="utilFramework"
 		class="br.com.framework.utils.UtilFramework" scope="session" />
+		
+	<!-- Controllers -->
+		
+	<!-- DAOS -->	
+	<bean id="repositoryLogin" class="br.com.dao.implementacao.DaoLogin" scope="singleton"/>
+	
+	
+	<!-- Services -->	
+	<bean id="sessionController" 
+		class="br.com.project.geral.controller.SessionControllerImpl" scope="singleton"/>
 </beans>
