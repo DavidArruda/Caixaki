@@ -58,7 +58,7 @@ function redirecionarPagina(context, pagina) {
 	document.location = context + pagina;
 }
 
-function invalidateSession(context, pagina) { 
+function invalidarSession(context, pagina) { 
      document.location = (context + pagina + ".jsf");
 }
 
