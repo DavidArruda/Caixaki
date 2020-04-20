@@ -150,14 +150,14 @@ function ocultarMenu() {
 	}
 	
 	function abrirMenupop() {
-	  $('#menupop').show('slow').mouseleave(function() {
-	  	fecharMenupop();
-	  });
+		$("#menupop").show("slow").mouseleave(function() {
+			fecharMenupop();
+		});
 	}
 	
 	function fecharMenupop() {
-	  if ($("#menupop").is(":visible")) {
-	  	$('#menupop').hide('slow');
+	  if($("#menupop").is(":visible")){
+		  $("#menupop").hide("slow");
 	  }
 	}
 
