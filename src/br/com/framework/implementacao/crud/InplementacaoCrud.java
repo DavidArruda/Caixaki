@@ -160,12 +160,12 @@ public class InplementacaoCrud<T> implements InterfaceCrud<T> {
 	}
 	
 	@Override
-	public JdbcTemplate getJdbcTemplate() throws Exception {
+	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
 
 	@Override
-	public SimpleJdbcTemplate getSimpleJdbcTemplate() throws Exception {
+	public SimpleJdbcTemplate getSimpleJdbcTemplate() {
 		return simpleJdbcTemplate;
 	}
 
