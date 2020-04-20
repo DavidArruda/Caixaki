@@ -267,12 +267,13 @@ public class InplementacaoCrud<T> implements InterfaceCrud<T> {
 	}
 
 	public T findUniqueByProperty(Class<T> entidade, Object valor, String atributo, String condicao) throws Exception {
+		
 		validaSessionFactory();
 
 		StringBuilder query = new StringBuilder();
-
-		query.append(" select entity from ").append(entidade.getSimpleName()).append(" entity where entity.")
-				.append(atributo).append(" = '").append(valor).append("' ").append(condicao);
+		query.append(" select entity from ").append(entidade.getSimpleName())
+		.append(" entity where entity.").append(atributo)
+		.append(" = '").append(valor).append("' ").append(condicao);
 
 		T obj = (T) this.findUniqueByQueryDinamica(query.toString());
 

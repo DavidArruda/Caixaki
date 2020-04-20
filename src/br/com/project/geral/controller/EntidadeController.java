@@ -11,7 +11,8 @@ import br.com.project.model.classes.Entidade;
 import br.com.srv.interfaces.SrvEntidade;
 
 @Controller
-public class EntidadeController extends InplementacaoCrud<Entidade> implements InterfaceCrud<Entidade> {
+public class EntidadeController extends InplementacaoCrud<Entidade> implements
+		InterfaceCrud<Entidade> {
 
 	private static final long serialVersionUID = 1L;
 	
