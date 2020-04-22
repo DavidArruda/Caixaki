@@ -21,8 +21,12 @@
 		<property name="hibernate.use_sql_comments">false</property>
 		<property name="hibernate.connection.autocommit">false</property>  
 		<property name="hibernate.connection.pool_size">50</property>   
-
+	
+		<!-- MAPEAMENTO DAS CLASSES MODELO-->
 		<mapping class="br.com.project.model.classes.Entidade" />
+		<mapping class="br.com.project.model.classes.Pais" />
+		<mapping class="br.com.project.model.classes.Cidade" />
+		<mapping class="br.com.project.model.classes.Estado" />
 
 		<listener class="org.hibernate.envers.event.AuditEventListener"
 			type="post-insert" />
