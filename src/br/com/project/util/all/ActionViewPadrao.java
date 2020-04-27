@@ -39,6 +39,4 @@ public interface ActionViewPadrao extends Serializable {
 	
 	abstract void addMessage(String msg);
 	
-	
-	
 }
