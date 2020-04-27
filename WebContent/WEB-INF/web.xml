@@ -41,10 +41,10 @@
   </error-page>
   
   <jsp-config>
-  	<jsp-property-group>
-  		<url-pattern>/**</url-pattern>
-  		<el-ignored>false</el-ignored>
-  	</jsp-property-group>
+  		<jsp-property-group>
+  			<url-pattern>/**</url-pattern>
+  			<el-ignored>false</el-ignored>
+  		</jsp-property-group>
   </jsp-config>
   
   <context-param>
@@ -77,8 +77,8 @@
   </context-param>
   
   <context-param>
-  	<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-  	<param-value>.xhtml .html .jsp</param-value>
+  	     <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+  	     <param-value>.xhtml .html .jsp</param-value> 
   </context-param>
   
   <context-param>
@@ -180,5 +180,10 @@
   	<servlet-name>Faces Servlet</servlet-name>
   	<url-pattern>*.jsf</url-pattern>
   </servlet-mapping>
+  
+  <mime-mapping>
+  	<extension>jsp</extension>
+  	<mime-type>text/xml</mime-type>
+  </mime-mapping>
   
 </web-app>
