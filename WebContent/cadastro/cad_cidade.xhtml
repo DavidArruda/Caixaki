@@ -22,14 +22,58 @@
 						<h:outputLabel id="labelNomeConsultaCidade" for="cidadeNome" value="Cidade * :"/>
 						<p:inputText id="cidadeNome" styleClass="estyleInputNome"
 							 required="true" maxlength="100" value="#{cidadeBeanView.objetoSelecionado.cid_descricao}"
-							requiredMessage="Informe o nome da cidade."
-							/>
+							requiredMessage="Informe o nome da cidade."/>
 						<p:message for="cidadeNome"/>
+						
+						<h:outputLabel for="estado" id="labelEstado" value="Estado * :"/>
+						<p:selectOneMenu id="estado" required="true" style="width:200px;"
+							requiredMessage="Informe o estado." value="#{cidadeBeanView.objetoSelecionado.estado}">
+							<f:selectItems value="#{estadoBeanView.estados}"/>
+						</p:selectOneMenu>
+						
 					</h:panelGrid>
 				</p:panel>
 				
-				<p:commandButton value="Salvar" ajax="true"  action="cidadeBeanView.salvar"/>
+				<p:commandButton value="SALVAR" ajax="false"  action="#{cidadeBeanView.salvar}"/>
+				<p:commandButton value="NOVO" ajax="false"  action="#{cidadeBeanView.novo}"/>
 			</h:form>
+			
+			<p:dataTable id="tableResult" value="#{cidadeBeanView.list}" var="objeto"
+			emptyMessage="Nenhum resultado encontrado.">
+				<p:column>
+					<f:facet name="header">Código</f:facet>
+					<center>
+						<h:outputText value="#{objeto.cid_codigo}"/>
+					</center>
+				</p:column>
+				
+				<p:column>
+					<f:facet name="header">Nome</f:facet>
+					<center>
+						<h:outputText value="#{objeto.cid_descricao}"/>
+					</center>
+				</p:column>
+				
+				<p:column>
+					<f:facet name="header">Estado</f:facet>
+					<center>
+						<h:outputText value="#{objeto.estado.est_nome}"/>
+					</center>
+				</p:column>
+				
+				<p:column>
+					<f:facet name="header">Editar</f:facet>
+					<center>
+						<p:commandLink action="#{cidadeBeanView.editar}"
+							id="editarCidade" value="Editar" ajax="true" immediate="true">
+							<f:setPropertyActionListener
+							value="#{objeto}" target="#{cidadeBeanView.objetoSelecionado}"/>
+						</p:commandLink>
+					</center>
+				</p:column>
+				
+			</p:dataTable>
+			
 		</ui:define>
 	</ui:composition>
 
