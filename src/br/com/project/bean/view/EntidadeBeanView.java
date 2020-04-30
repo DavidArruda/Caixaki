@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import br.com.framework.interfac.crud.InterfaceCrud;
 import br.com.project.bean.geral.BeanManagedViewAbstract;
+import br.com.project.geral.controller.EntidadeController;
+import br.com.project.model.classes.Entidade;
 
 @Controller
 @Scope(value = "session")
@@ -20,6 +23,9 @@ public class EntidadeBeanView extends BeanManagedViewAbstract {
 	@Autowired
 	private ContextoBean contextoBean;
 	
+	@Autowired
+	private EntidadeController entidadeController;
+	
 	/**
 	 * Retorna o nome do usuário logado.
 	 * @return String
@@ -30,6 +36,16 @@ public class EntidadeBeanView extends BeanManagedViewAbstract {
 	
 	public Date getUltimoAcesso() throws Exception{
 		return contextoBean.getEntidadeLogada().getEnt_ultimoacesso();
+	}
+
+	@Override
+	protected Class<Entidade> getClassImplemt() {
+		return Entidade.class;
+	}
+
+	@Override
+	protected InterfaceCrud<Entidade> getControler() {
+		return entidadeController;
 	}
 
 }
