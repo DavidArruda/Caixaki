@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -22,26 +23,26 @@ public class ContextoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final String USER_LOGADO_SESSAO = "userLogadoSessao";
-	
+
 	@Autowired
 	private EntidadeController entidadeController;
-	
+
 	@Autowired
 	private SessionController sessionController;
-	
+
 	/**
-	 * Retorna todas as informações do usuário logado 
+	 * Retorna todas as informações do usuário logado .
+	 * 
 	 * @return Authentication
 	 */
 	public Authentication getAuthentication() {
 		return SecurityContextHolder.getContext().getAuthentication();
 	}
 
-	public Entidade getEntidadeLogada() throws Exception{
+	public Entidade getEntidadeLogada() throws Exception {
 		Entidade entidade = (Entidade) getExternalContext().getSessionMap().get(USER_LOGADO_SESSAO);
-		
-		if (entidade == null || (entidade != null &&
-				!entidade.getEnt_login().equals(getUserPrincipal()))){
+
+		if (entidade == null || (entidade != null && !entidade.getEnt_login().equals(getUserPrincipal()))) {
 			if (getAuthentication().isAuthenticated()) {
 				entidadeController.updateUltimoAcessoUser(getAuthentication().getName());
 				entidade = entidadeController.findUserLogado(getAuthentication().getName());
@@ -52,9 +53,10 @@ public class ContextoBean implements Serializable {
 		}
 		return entidade;
 	}
-	
+
 	/**
 	 * Retorna o usuário principal
+	 * 
 	 * @return String
 	 */
 	private String getUserPrincipal() {
@@ -66,5 +68,21 @@ public class ContextoBean implements Serializable {
 		ExternalContext externalContext = context.getExternalContext();
 		return externalContext;
 	}
-	
+
+	/**
+	 * Verifica se o usuário logado possui o acesso necessario para exibir o componente.
+	 * @param acessos
+	 * @return boolean
+	 */
+	public boolean possuiAcesso(String... acessos) { // String... acessos = Permite passar varias strings separadas por
+		for (String acesso : acessos) {
+			for (GrantedAuthority authority : getAuthentication().getAuthorities()) {
+				if (authority.getAuthority().trim().equals(acesso.trim())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 }
