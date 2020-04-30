@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import br.com.framework.interfac.crud.InterfaceCrud;
 import br.com.project.bean.geral.BeanManagedViewAbstract;
 import br.com.project.geral.controller.SessionController;
 import br.com.srv.interfaces.SrvLogin;
@@ -88,6 +89,16 @@ public class LoginBeanView extends BeanManagedViewAbstract {
 	
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Override
+	protected Class<?> getClassImplemt() {
+		return null;
+	}
+
+	@Override
+	protected InterfaceCrud<?> getControler() {
+		return null;
 	}
 
 }
