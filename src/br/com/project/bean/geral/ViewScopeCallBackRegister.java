@@ -10,7 +10,7 @@ import javax.faces.event.PreDestroyViewMapEvent;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.ViewMapListener;
 
-public class ViewScopeCallBackRegister implements ViewMapListener {
+public class ViewScopeCallBackRegister implements ViewMapListener{
 
 	@Override
 	public boolean isListenerForSource(Object source) {

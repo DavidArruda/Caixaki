@@ -12,23 +12,24 @@ import org.springframework.stereotype.Component;
 import br.com.project.util.all.BeanViewAbstract;
 
 @Component
-public class BeanReportView extends BeanViewAbstract {
+public abstract class BeanReportView extends BeanViewAbstract {
 
 	private static final long serialVersionUID = 1L;
 
 	protected StreamedContent arquivoReport;
 	protected int tipoRelatorio;
 	protected List<?> listDataBeanCollectionReport;
-	protected HashMap<Object, Object> parametroRelatorio;
+	protected HashMap<Object, Object> parametrosRelatorio;
 	protected String nomeRelatorioJasper = "default";
 	protected String nomeRelatorioSaida = "default";
 
 	@Resource
 	private ReportUtil reportUtil;
 
+	@SuppressWarnings("rawtypes")
 	public BeanReportView() {
-		parametroRelatorio = new HashMap<Object, Object>();
-		listDataBeanCollectionReport = new ArrayList<>();
+		parametrosRelatorio = new HashMap<Object, Object>();
+		listDataBeanCollectionReport = new ArrayList();
 	}
 
 	public ReportUtil getReportUtil() {
@@ -39,13 +40,8 @@ public class BeanReportView extends BeanViewAbstract {
 		this.reportUtil = reportUtil;
 	}
 
-	/**
-	 * Resposável por retornar o arquivo para a web
-	 * 
-	 * @return StreamedContent
-	 */
 	public StreamedContent getArquivoReport() throws Exception {
-		return getReportUtil().gerarRelatorio(getListDataBeanCollectionReport(), getParametroRelatorio(),
+		return getReportUtil().geraRelatorio(getListDataBeanCollectionReport(), getParametrosRelatorio(),
 				getNomeRelatorioJasper(), getNomeRelatorioSaida(), getTipoRelatorio());
 	}
 
@@ -65,12 +61,12 @@ public class BeanReportView extends BeanViewAbstract {
 		this.listDataBeanCollectionReport = listDataBeanCollectionReport;
 	}
 
-	public HashMap<Object, Object> getParametroRelatorio() {
-		return parametroRelatorio;
+	public HashMap<Object, Object> getParametrosRelatorio() {
+		return parametrosRelatorio;
 	}
 
-	public void setParametroRelatorio(HashMap<Object, Object> parametroRelatorio) {
-		this.parametroRelatorio = parametroRelatorio;
+	public void setParametrosRelatorio(HashMap<Object, Object> parametrosRelatorio) {
+		this.parametrosRelatorio = parametrosRelatorio;
 	}
 
 	public String getNomeRelatorioJasper() {
@@ -78,6 +74,7 @@ public class BeanReportView extends BeanViewAbstract {
 	}
 
 	public void setNomeRelatorioJasper(String nomeRelatorioJasper) {
+
 		if (nomeRelatorioJasper == null || nomeRelatorioJasper.isEmpty()) {
 			nomeRelatorioJasper = "default";
 		}
@@ -90,10 +87,11 @@ public class BeanReportView extends BeanViewAbstract {
 	}
 
 	public void setNomeRelatorioSaida(String nomeRelatorioSaida) {
+
 		if (nomeRelatorioSaida == null || nomeRelatorioSaida.isEmpty()) {
 			nomeRelatorioSaida = "default";
 		}
-
 		this.nomeRelatorioSaida = nomeRelatorioSaida;
 	}
+
 }
