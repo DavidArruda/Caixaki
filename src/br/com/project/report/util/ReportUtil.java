@@ -20,14 +20,12 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.oasis.JROdtExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
-
-
-@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
 @Component
 public class ReportUtil implements Serializable {
 
@@ -38,12 +36,12 @@ public class ReportUtil implements Serializable {
 	private static final String SUBREPORT_DIR = "SUBREPORT_DIR";
 	private static final String EXTESION_ODS = "ods";
 	private static final String EXTESION_XLS = "xls";
-	//private static final String EXTESION_HTML = "html";
+	private static final String EXTESION_HTML = "html";
 	private static final String EXTESION_PDF = "pdf";
 	private String SEPARATOR = File.separator;
 	private static final int RELATORIO_PDF = 1;
 	private static final int RELATORIO_EXCEL = 2;
-	//private static final int RELATORIO_HTML = 3;
+	private static final int RELATORIO_HTML = 3;
 	private static final int RELATORIO_PLANILHA_OPEN_OFFICE = 4;
 	private static final String PONTO = ".";
 	private StreamedContent arquivoRetorno = null;
@@ -75,7 +73,9 @@ public class ReportUtil implements Serializable {
 		// EX: -> c:/aplica��o/relatorios/rel_bairo.jasper
 		File file = new File(caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + PONTO + "jasper");
 
-		if (caminhoRelatorio == null || (caminhoRelatorio != null && caminhoRelatorio.isEmpty()) || !file.exists()) {
+		if (caminhoRelatorio == null 
+				|| (caminhoRelatorio != null && caminhoRelatorio.isEmpty())
+				|| !file.exists()) {
 			caminhoRelatorio = this.getClass().getResource(FOLDER_RELATORIOS).getPath();
 			SEPARATOR = "";
 		}
@@ -95,20 +95,18 @@ public class ReportUtil implements Serializable {
 		parametrosRelatorio.put(SUBREPORT_DIR, caminhoSubreport_dir);
 
 		/* Carrega o arquivo compilado para a mem�ria */
-		JasperPrint impressoraJasper = JasperFillManager.fillReport(relatorioJasper, parametrosRelatorio, jrbcds);
+		JasperPrint impressoraJasper = JasperFillManager.
+				fillReport(relatorioJasper, parametrosRelatorio, jrbcds);
 
 		switch (tipoRelatorio) {
 		case RELATORIO_PDF:
 			tipoArquivoExportado = new JRPdfExporter();
 			extansaoArquivoExportado = EXTESION_PDF;
 			break;
-			
-	/*
 		case RELATORIO_HTML:
-			tipoArquivoExportado = new JR();
+			tipoArquivoExportado = new JRHtmlExporter();
 			extansaoArquivoExportado = EXTESION_HTML;
 			break;
-	*/
 		case RELATORIO_EXCEL:
 			tipoArquivoExportado = new JRXlsExporter();
 			extansaoArquivoExportado = EXTESION_XLS;
