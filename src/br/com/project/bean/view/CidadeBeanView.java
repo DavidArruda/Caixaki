@@ -33,10 +33,12 @@ public class CidadeBeanView extends BeanManagedViewAbstract {
 	@Autowired
 	private CidadeController cidadeController;
 	
+	
 	@Override
 	public StreamedContent getArquivoReport() throws Exception {
 		return super.getArquivoReport();
 	}
+	
 	
 
 	@Override

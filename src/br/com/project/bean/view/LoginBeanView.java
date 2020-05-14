@@ -54,6 +54,7 @@ public class LoginBeanView extends BeanManagedViewAbstract {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	public void invalidar(ActionEvent actionEvent) throws Exception{
 		RequestContext context = RequestContext.getCurrentInstance();
 		FacesMessage message = null;
