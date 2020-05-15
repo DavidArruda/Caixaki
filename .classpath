@@ -57,7 +57,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/junit-4.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/openid4java-nodeps-0.9.6.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-3.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-examples-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-excelant-3.9-20121203.jar"/>
@@ -93,10 +92,11 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/start-1.0.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/taglib-core-0.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xmlbeans-1.0.3.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasperreports-5.6.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxb-api-2.3.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxb-core-2.3.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jaxb-impl-2.3.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasperreports-6.12.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
