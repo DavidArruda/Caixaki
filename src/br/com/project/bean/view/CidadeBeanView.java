@@ -79,8 +79,7 @@ public class CidadeBeanView extends BeanManagedViewAbstract {
 
 	@Override
 	public String novo() throws Exception {
-		objetoSelecionado = new Cidade();
-
+		setarVariaveisNulas();
 		return url;
 	}
 
