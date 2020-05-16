@@ -35,7 +35,7 @@ public class ReportUtil implements Serializable {
 	private static final String SUBREPORT_DIR = "SUBREPORT_DIR";
 	private static final String EXTESION_ODS = "ods";
 	private static final String EXTESION_XLS = "xls";
-	private static final String EXTESION_HTML = "html";
+	//private static final String EXTESION_HTML = "html";
 	private static final String EXTESION_PDF = "pdf";
 	private String SEPARATOR = File.separator;
 	private static final int RELATORIO_PDF = 1;
