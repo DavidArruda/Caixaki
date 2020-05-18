@@ -13,6 +13,7 @@
 			<composite:attribute name="managedBeanView" required="true"/>
 			<composite:attribute name="ocultaNovo" required="true"/>
 			<composite:attribute name="menuImpressao" required="false" default="false"/>
+			<composite:attribute name="nomePesquisa" required="true"/>
 		</composite:interface>
 		
 		<composite:implementation>
@@ -30,6 +31,44 @@
 					</util:menuImpressao>
 				</h:column>
 			</h:panelGrid>
+			
+			<p:spacer height="20px"/>
+			
+			<p:panel id="panelPesquisa" header="#{cc.attrs.nomePesquisa}">
+				<h:panelGrid id="panelGridPesquisa" columns="7">
+					<h:outputLabel for="campo" id="labelCampo" value="Campo:"/>
+					<p:selectOneMenu style="width: 150px;" id="campo"
+					onchange=""
+					value="#{cc.attrs.managedBeanView.objetoCampoConsultaSelecionado}">
+					
+						<f:selectItems var="campoPesquisaSelecionado" 
+						itemLabel="campoPesquisaSelecionado.descricao"
+						itemValue="campoPesquisaSelecionado.tipoClass"
+						id="itensCampoPesquisa" value="#{cc.attrs.managedBeanView.listaCampoPesquisa}">
+						
+						</f:selectItems>
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="condicao" id="labelCondicao" value="Onde:"/>
+					<p:selectOneMenu id="condicao" style="width: 150px;"
+						value="#{cc.attrs.managedBeanView.condicaoPesquisaSelecionado}">
+						
+						<f:selectItems id="itensCondicao"
+						value="#{cc.attrs.managedBeanView.listaCondicaoPesquisa}">
+						</f:selectItems>
+					</p:selectOneMenu>
+					
+					<p:inputText id="valorPesquisa" immediate="false"
+					value="#{cc.attrs.managedBeanView.valorPesquisa}"/>
+					
+					<p:commandButton id="buttonPesquisar"
+						value="Filtrar" ajax="true"
+						actionListener="cc.attrs.managedBeanView.consultarEntidade"
+						process="@this, panelGridPesquisa">
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+			
 		</composite:implementation>
 		
 	</h:form>
