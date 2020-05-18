@@ -34,7 +34,7 @@ public class Estado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@IdentificaCampoPesquisa(descricao = "Código", campoConsulta = "est_id")
+	@IdentificaCampoPesquisa(descricaoCampo = "Código", campoConsulta = "est_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estado_seq")
 	private Long est_id;
@@ -42,7 +42,7 @@ public class Estado implements Serializable {
 	@Column(length = 10, nullable = true)
 	private String est_uf;
 
-	@IdentificaCampoPesquisa(descricao = "Nome", campoConsulta = "est_nome", principal = 1)
+	@IdentificaCampoPesquisa(descricaoCampo = "Nome", campoConsulta = "est_nome", principal = 1)
 	private String est_nome;
 
 	@NotAudited // PARA NÃO AUDITAR (EVITAR DE CRIAR COLUNAS EXTRAS
