@@ -68,7 +68,7 @@
 					
 					<p:commandButton id="buttonPesquisar"
 						value="Filtrar" ajax="true"
-						actionListener="cc.attrs.managedBeanView.consultarEntidade"
+						actionListener="#{cc.attrs.managedBeanView.consultarEntidade}"
 						process="@this, panelGridPesquisa"
 						oncomplete="addFocoAoCampo('valorPesquisa');"
 						onsuccess="addFocoAoCampo('valorPesquisa');"
@@ -81,10 +81,17 @@
 			
 			<p:dataTable id="tableResult" rendered="true"
 			value="#{cc.attrs.managedBeanView.list}"
-			var="objeto" rows="10"
+			var="objeto"
+			rows="10"
 			widgetVar="tableResult"
+			selectionMode="single"
+			selection="#{cc.attrs.managedBeanView.objetoSelecionado}"
+			rowKey="#{objeto}"
 			paginatorPosition="bottom"
-			lazy="true" paginator="true" emptyMessage="Não existe valores para exibição."
+			lazy="true"
+			rowIndexVar="index"
+			paginator="true"
+			emptyMessage="Não existe valores para exibição."
 			paginatorTemplate="{FirstPageLink}
 									{PreviousPageLink} {PageLinks}
 									{NextPageLink} {LastPageLink}
