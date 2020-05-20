@@ -15,7 +15,7 @@ function reloadPage() {
 
 function validaDescricao(descricao) {
 	if (descricao === ' ' || descricao.trim() === '') {
-		return "Descri��o n�o foi informada.";
+		return "Descrição não foi informada.";
 	}
 	 else {
 		return descricao;
@@ -36,6 +36,7 @@ function logout(contextPath) {
 	});
 	
 }
+
 
 /**
  * Usada apenas para o menu do sistema Limpar variaveis por ajax e redireciona
@@ -229,9 +230,10 @@ function carregarIdElementosPagina() {
 		 }
 	 }
 }
+
 /**
  * Retorno o valor do id do componente dentro do documento html passando como
- * parametro a descri��o do id declarada em jsf
+ * parametro a descriï¿½ï¿½o do id declarada em jsf
  * 
  * @param id
  */
@@ -268,8 +270,7 @@ function getValorElementPorIdJQuery(id) {
  * @param campo
  */
 function addFocoAoCampo(campo) {
-	var id = getValorElementoPorId(campo);
-	
+	var id = getValorElementPorId(campo);
 	if (id != undefined) {
 		document.getElementById(id).focus();
 	}

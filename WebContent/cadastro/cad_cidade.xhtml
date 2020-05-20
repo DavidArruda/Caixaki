@@ -10,10 +10,6 @@
 	
 	<ui:composition template="/templates/templatePrincipal.xhtml">
 		<ui:define name="corpo">
-			<h:commandLink immediate="true" id="pdfDownload">		
-				<p:fileDownload value="#{cidadeBeanView.arquivoReport}"/>
-				<h:graphicImage library="img" name="pdf.png"/>
-			</h:commandLink>
 			<h:form id="formCadastro" prependId="false">
 				<c:set var="isCadastro" value="true" scope="view"/>
 				<p:panel header="Cadastro de cidade" id="panelCadastro">
@@ -59,9 +55,9 @@
 			
 			<div class="espacoBranco"/>
 			
-			<p:dataTable id="tableResult" value="#{cidadeBeanView.list}" var="objeto"
+			<p:dataTable id="tableResult" value="#{cidadeBeanView.list.list}" var="objeto"
 				emptyMessage="Nenhum resultado encontrado."
-				rendered="#{cidadeBeanView.list.size() > 0}"
+				rendered="#{cidadeBeanView.list.list.size() > 0}"
 				rows="5"
 				paginator="true"
 				paginatorPosition="bottom"

@@ -146,6 +146,8 @@
 	<!-- Bean de contexto application -->
 	<bean id="reportUtil"
 		class="br.com.project.report.util.ReportUtil" />
+		
+	<bean id="controller" name="controller" class="br.com.framework.controller.crud.Controller"/>
 
 	<bean id="utilFramework"
 		class="br.com.framework.utils.UtilFramework" scope="session" />

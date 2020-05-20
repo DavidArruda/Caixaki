@@ -23,12 +23,12 @@ public class Pais implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@IdentificaCampoPesquisa(descricao = "Código", campoConsulta = "pais_id")
+	@IdentificaCampoPesquisa(descricaoCampo = "Código", campoConsulta = "pais_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pais_seq")
 	private Long pais_id;
 
-	@IdentificaCampoPesquisa(descricao = "Nome", campoConsulta = "pais_nome", principal = 1)
+	@IdentificaCampoPesquisa(descricaoCampo = "Nome", campoConsulta = "pais_nome", principal = 1)
 	@Column(nullable = false, length = 80)
 	private String pais_nome;
 

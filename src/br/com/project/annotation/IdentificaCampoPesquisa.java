@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Documented
 public abstract @interface IdentificaCampoPesquisa {
 	
-	String descricao(); //DESCRIÇÃO DO CAMPO PARA A TELA
+	String descricaoCampo(); //DESCRIÇÃO DO CAMPO PARA A TELA
 	String campoConsulta(); // CAMPO DO BANCO
 	int principal() default 10000; // POSIÇAO QUE IRÁ APARECER NO COMBO
 
