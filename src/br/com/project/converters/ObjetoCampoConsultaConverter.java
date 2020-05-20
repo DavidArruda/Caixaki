@@ -15,7 +15,7 @@ import br.com.project.bean.geral.ObjetoCampoConsulta;
  *
  */
 
-@FacesConverter(forClass = ObjetoCampoConsultaConverter.class)
+@FacesConverter(forClass = ObjetoCampoConsulta.class)
 public class ObjetoCampoConsultaConverter implements Converter, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,7 +29,6 @@ public class ObjetoCampoConsultaConverter implements Converter, Serializable {
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String value) {
 		if (value != null && !value.isEmpty()) { //Valida se não é nulo.
 			String[] vals = value.split("\\*");
-			
 			ObjetoCampoConsulta objetoCampoConsulta = new ObjetoCampoConsulta();
 			objetoCampoConsulta.setCampoBanco(vals[0]);
 			objetoCampoConsulta.setTipoClass(vals[1]);
