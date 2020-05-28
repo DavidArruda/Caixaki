@@ -2,6 +2,8 @@ package br.com.project.model.classes;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
+import org.primefaces.json.JSONObject;
 
 @Audited
 @Entity
@@ -25,6 +28,7 @@ public class Entidade implements Serializable{
 	private String ent_login = null;
 	private String ent_senha;
 	private boolean ent_inativo = false;
+	private String ent_nomefantasia;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ent_ultimoacesso;
@@ -68,6 +72,14 @@ public class Entidade implements Serializable{
 	public void setEnt_ultimoacesso(Date ent_ultimoacesso) {
 		this.ent_ultimoacesso = ent_ultimoacesso;
 	}
+	
+	public String getEnt_nomefantasia() {
+		return ent_nomefantasia;
+	}
+	
+	public void setEnt_nomefantasia(String ent_nomefantasia) {
+		this.ent_nomefantasia = ent_nomefantasia;
+	}
 
 	@Override
 	public int hashCode() {
@@ -92,6 +104,14 @@ public class Entidade implements Serializable{
 		} else if (!ent_codigo.equals(other.ent_codigo))
 			return false;
 		return true;
+	}
+	
+	public JSONObject getJson() {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("ent_codigo", ent_codigo);
+		map.put("ent_login", ent_login);
+		map.put("ent_nomefantasia", ent_nomefantasia);
+		return new JSONObject(map);
 	}
 	
 }
