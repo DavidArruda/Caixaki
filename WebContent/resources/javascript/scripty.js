@@ -613,7 +613,7 @@ function pesquisarUserDestinoPerderFoco(id) {
 }
 
 function pesquisarUserDestinoPerderFocoDialog(id) {
-	if (id.trim() != '') {
+	if (id != '') {
 	 statusDialog.show();
 	 $("#usr_destinoMsgDialog").val('');
 	 $("#loginDestinoMsgDialog").val('');
