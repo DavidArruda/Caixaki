@@ -68,6 +68,11 @@
 						value="#{mensagemBeanView.objetoSelecionado.usr_destino.ent_codigo}"
 						onblur=" pesquisarUserDestinoPerderFocoDialog(this.value);"/>
 						
+						<p:commandButton id="buttonPesquisarDestinoDialog"
+							ajax="true" immediate="true" oncomplete="destinoDialogMsgDialog.show();"
+							icon="imgPesquisa">
+						</p:commandButton>
+						
 						<p:inputText id="loginDestinoMsgDialog" readonly="true"
 						immediate="true"
 						value="#{mensagemBeanView.objetoSelecionado.usr_destino.ent_login}"
@@ -179,6 +184,45 @@
 				
 			</p:panelGrid>
 		</p:panel>
+		
+		<p:spacer height="30px"/>
+		
+		<p:commandButton value="NOVO"
+			style="height:30px; width:100px; background:#CDCDC1;border: 1px solid #FFFFFF;"
+			rendered="#{contextoBean.possuiAcesso('MENSAGENS_ENVIAR_NOVO','ADMIN')}"
+			actionListener="#{mensagemBeanView.novo}" ajax="true" id="buttonNovo"
+			immediate="false" update="formCadastroMsgDialog, :formTemplate:msg">
+				<p:ajax listener="#{mensagemBeanView.novo}"/>
+		</p:commandButton>
+		
+		<p:commandButton value="SALVAR"
+			style="height:30px; width:100px; background:#CDCDC1;border: 1px solid #FFFFFF;"
+			rendered="#{contextoBean.possuiAcesso('MENSAGENS_ENVIAR_NOVO','ADMIN')}"
+			actionListener="#{mensagemBeanView.saveNotReturn}" ajax="true" id="buttonSalvar"
+			partialSubmit="true" process="@this, @form"
+			immediate="false" update="formCadastroMsgDialog, :formTemplate:msg">
+		</p:commandButton>
+		
+		<p:commandButton value="CANCELAR"
+			style="height:30px; width:100px; background:#CDCDC1;border: 1px solid #FFFFFF;"
+			onclick="enviarMsgDialog.hide();"
+			actionListener="#{mensagemBeanView.novo}" ajax="true" id="buttonCancelar"
+			immediate="false" update="formCadastroMsgDialog, :formTemplate:msg">
+		</p:commandButton>
+		
+		<p:dialog widgetVar="destinoDialogMsgDialog"
+		 id="destinoDialogMsgDialog" modal="false" resizable="false" 
+		 height="400" dynamic="true" appendToBody="false" header="Consulta usuário destino">
+			
+			<util:pesquisa managedBeanView="#{funcionarioBeanView}"
+				ocultaNovo="true"
+				exibirBotaoAdd="true"
+				nomePesquisa="Pesquisa usuário"
+				colunasGridDataTableList="/resources/components/colunasDataTableFuncionario.xhtml"
+				funcaoJavaScript="pesquisarUserDestinoPerderFocoDialog(#{objeto.ent_codigo}), destinoDialogMsgDialog.hide()">
+			</util:pesquisa>
+		</p:dialog>
+	
 	
 	</h:form>
 
