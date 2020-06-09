@@ -32,4 +32,15 @@ public class EntidadeController extends InplementacaoCrud<Entidade> implements I
 
 	}
 
+	/**
+	 * Método para verificar se o cpf já está cadastrado na base de dados.
+	 * @param cpf
+	 * @return boolean
+	 * @throws Exception
+	 * @author David Arruda
+	 */
+	public boolean existeCpf(String cpf) throws Exception {
+		return super.findListByQueryDynamic("from Entidade where cpf = '" + cpf + "'").size() > 0;
+	}
+
 }
