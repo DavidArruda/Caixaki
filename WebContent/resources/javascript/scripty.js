@@ -613,10 +613,11 @@ function pesquisarUserDestinoPerderFoco(id) {
 }
 
 function pesquisarUserDestinoPerderFocoDialog(id) {
-	if (id.trim() != '') {
+	if (id != '') {
 	 statusDialog.show();
+	 $("#usr_destinoMsgDialog").val('');
 	 $("#loginDestinoMsgDialog").val('');
-	 $.get("findUserDestino?codEntidade=" + id, function(resposta) {
+	 $.get("buscarUsuarioDestinoMsg?codEntidade=" + id, function(resposta) {
 	        if (resposta != 'erro' && resposta.trim() != ''){
 	        	var entidadeObj = JSON.parse(resposta);
 	        	$("#usr_destinoMsgDialog").val(entidadeObj.ent_codigo);

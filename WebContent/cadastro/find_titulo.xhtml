@@ -7,20 +7,18 @@
 	xmlns:sec="http://www.springframework.org/security/facelets/tags"
 	xmlns:util="http://java.sun.com/jsf/composite/components"
 	xmlns:p="http://primefaces.org/ui">
-	
-	<ui:composition template="/templates/templatePrincipal.xhtml">
-		<ui:define name="corpo">
-		
-			<util:pesquisa managedBeanView="#{cidadeBeanView}"
+
+<ui:composition template="/templates/templatePrincipal.xhtml">
+	<ui:define name="corpo">
+
+		<util:pesquisa managedBeanView="#{tituloBeanView}"
 			menuImpressao="true"
-			ocultaNovo="#{contextoBean.possuiAcesso('CIDADE_NOVO','ADMIN')}"
-			nomePesquisa="Pesquisa de Cidade"
-			exibirBotaoAdd = "false"
-			colunasGridDataTableList="/resources/components/colunasDataTableCidade.xhtml">
-			</util:pesquisa>
-			
-		</ui:define>
-	</ui:composition>
-	
+			ocultaNovo="#{contextoBean.possuiAcesso('FINANCEIRO_NOVO','ADMIN')}"
+			nomePesquisa="Pesquisa de Título" exibirBotaoAdd="false"
+			colunasGridDataTableList="/resources/components/colunasDataTableTitulo.xhtml">
+		</util:pesquisa>
+
+	</ui:define>
+</ui:composition>
 
 </html>

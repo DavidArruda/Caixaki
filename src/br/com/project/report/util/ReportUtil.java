@@ -26,6 +26,13 @@ import net.sf.jasperreports.engine.export.oasis.JROdtExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 @Component
+@Deprecated
+@SuppressWarnings("rawtypes")
+/**
+ * Classe reponsável por gerar os relátorios do sistema.
+ * @author David Arruda
+ *
+ */
 public class ReportUtil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -35,12 +42,12 @@ public class ReportUtil implements Serializable {
 	private static final String SUBREPORT_DIR = "SUBREPORT_DIR";
 	private static final String EXTESION_ODS = "ods";
 	private static final String EXTESION_XLS = "xls";
-	//private static final String EXTESION_HTML = "html";
+	// private static final String EXTESION_HTML = "html";
 	private static final String EXTESION_PDF = "pdf";
 	private String SEPARATOR = File.separator;
 	private static final int RELATORIO_PDF = 1;
 	private static final int RELATORIO_EXCEL = 2;
-	private static final int RELATORIO_HTML = 3;
+	// private static final int RELATORIO_HTML = 3;
 	private static final int RELATORIO_PLANILHA_OPEN_OFFICE = 4;
 	private static final String PONTO = ".";
 	private StreamedContent arquivoRetorno = null;
@@ -50,17 +57,18 @@ public class ReportUtil implements Serializable {
 	private String caminhoSubreport_dir = "";
 	private File arquivoGerado = null;
 
+	@SuppressWarnings("unchecked")
 	public StreamedContent geraRelatorio(List<?> listDataBeanColletionReport, HashMap parametrosRelatorio,
 			String nomeRelatorioJasper, String nomeRelatorioSaida, int tipoRelatorio) throws Exception {
 
 		/*
 		 * Cria a lista de collectionDataSource de beans que carregam os dados para o
-		 * relat�rio
+		 * relatório
 		 */
 		JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(listDataBeanColletionReport);
 
 		/*
-		 * Fornece o caminho fisico at� a pasta de cont�m os relat�rios compilados
+		 * Fornece o caminho fisico at� a pasta de contém os relatórios compilados
 		 * .jasper
 		 */
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -69,12 +77,10 @@ public class ReportUtil implements Serializable {
 
 		String caminhoRelatorio = scontext.getRealPath(FOLDER_RELATORIOS);
 
-		// EX: -> c:/aplica��o/relatorios/rel_bairo.jasper
+		// EX: -> c:/aplicão/relatorios/rel_bairo.jasper
 		File file = new File(caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + PONTO + "jasper");
 
-		if (caminhoRelatorio == null 
-				|| (caminhoRelatorio != null && caminhoRelatorio.isEmpty())
-				|| !file.exists()) {
+		if (caminhoRelatorio == null || (caminhoRelatorio != null && caminhoRelatorio.isEmpty()) || !file.exists()) {
 			caminhoRelatorio = this.getClass().getResource(FOLDER_RELATORIOS).getPath();
 			SEPARATOR = "";
 		}
@@ -82,7 +88,7 @@ public class ReportUtil implements Serializable {
 		/* caminho para imagens */
 		parametrosRelatorio.put("REPORT_PARAMETERS_IMG", caminhoRelatorio);
 
-		/* caminho completo at� o relat�rio compilado indicado */
+		/* caminho completo até o relatório compilado indicado */
 		String caminhoArquivoJasper = caminhoRelatorio + SEPARATOR + nomeRelatorioJasper + PONTO + "jasper";
 
 		/* Faz o carregamento do relatorio indicado */
@@ -93,22 +99,19 @@ public class ReportUtil implements Serializable {
 		caminhoSubreport_dir = caminhoRelatorio + SEPARATOR;
 		parametrosRelatorio.put(SUBREPORT_DIR, caminhoSubreport_dir);
 
-		/* Carrega o arquivo compilado para a mem�ria */
-		JasperPrint impressoraJasper = JasperFillManager.
-				fillReport(relatorioJasper, parametrosRelatorio, jrbcds);
+		/* Carrega o arquivo compilado para a memória */
+		JasperPrint impressoraJasper = JasperFillManager.fillReport(relatorioJasper, parametrosRelatorio, jrbcds);
 
 		switch (tipoRelatorio) {
 		case RELATORIO_PDF:
 			tipoArquivoExportado = new JRPdfExporter();
 			extansaoArquivoExportado = EXTESION_PDF;
 			break;
-		
-	/*
-		case RELATORIO_HTML:
-			tipoArquivoExportado = new JRHtmlExporter();
-			extansaoArquivoExportado = EXTESION_HTML;
-			break;
-	*/
+
+		/*
+		 * case RELATORIO_HTML: tipoArquivoExportado = new JRHtmlExporter();
+		 * extansaoArquivoExportado = EXTESION_HTML; break;
+		 */
 		case RELATORIO_EXCEL:
 			tipoArquivoExportado = new JRXlsExporter();
 			extansaoArquivoExportado = EXTESION_XLS;
@@ -133,22 +136,22 @@ public class ReportUtil implements Serializable {
 		/* Cria novo file exportado */
 		arquivoGerado = new File(caminhoArquivoRelatorio);
 
-		/* Preparar a impress�o */
+		/* Preparar a impressão */
 		tipoArquivoExportado.setParameter(JRExporterParameter.JASPER_PRINT, impressoraJasper);
 
 		/* Nome do arquivo fisico a ser impresso/exportado */
 		tipoArquivoExportado.setParameter(JRExporterParameter.OUTPUT_FILE, arquivoGerado);
 
-		/* executa a exporta��o */
+		/* executa a exportação */
 		tipoArquivoExportado.exportReport();
 
-		/* Remove o arquivo do servidor ap�s ser feito o download pelo usu�rio */
+		/* Remove o arquivo do servidor após ser feito o download pelo usuário */
 		arquivoGerado.deleteOnExit();
 
-		/* Cria o inputstrwam para ser usado pelo PrimeFaces */
+		/* Cria o inputstream para ser usado pelo PrimeFaces */
 		InputStream conteudoRelatorio = new FileInputStream(arquivoGerado);
 
-		/* Faz o retorno para a aplica��o */
+		/* Faz o retorno para a aplicação */
 
 		arquivoRetorno = new DefaultStreamedContent(conteudoRelatorio, "application/" + extansaoArquivoExportado,
 				nomeRelatorioSaida + PONTO + extansaoArquivoExportado);
