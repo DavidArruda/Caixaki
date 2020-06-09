@@ -125,6 +125,19 @@
 										action="#{cidadeBeanView.redirecionarFindEntidade}" >
 									</p:menuitem>
 								</sec:ifAnyGranted>
+								
+								<sec:ifAnyGranted roles="FUNCIONARIO_ACESSAR, ADMIN">
+									<p:menuitem value="Funcionário" id="menuFuncionario" immediate="true"
+										action="#{funcionarioBeanView.redirecionarFindEntidade}" >
+									</p:menuitem>
+								</sec:ifAnyGranted>
+								
+								<sec:ifAnyGranted roles="FINANCEIRO_ACESSAR, ADMIN">
+									<p:menuitem value="Título" id="menuTitulo" immediate="true"
+										action="#{tituloBeanView.redirecionarFindEntidade}" >
+									</p:menuitem>
+								</sec:ifAnyGranted>
+								
 							</p:submenu>
 						</sec:ifAnyGranted>
 						
