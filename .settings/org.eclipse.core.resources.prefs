@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/br/com/project/report/util/ReportUtil.java=UTF-8
 encoding//src/relatorios/report_cidade.jrxml=UTF-8
+encoding//src/relatorios/report_funcionario.jrxml=UTF-8
+encoding//src/relatorios/report_funcionario_subreport.jrxml=UTF-8
