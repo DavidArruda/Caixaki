@@ -161,7 +161,7 @@
 							<p:message for="ent_codigoabertura" />
 						</p:row>
 					</p:column>
-					
+
 					<p:column>
 						<p:row>
 							<h:outputLabel for="ent_codigoabertura" value="Responsável: " />
@@ -170,8 +170,7 @@
 
 					<p:column>
 						<p:row>
-							<p:inputText id="ent_codigoabertura" 
-								required="true"
+							<p:inputText id="ent_codigoabertura" required="true"
 								requiredMessage="Informe o reponsável."
 								value="#{tituloBeanView.objetoSelecionado.ent_codigoabertura.ent_codigo}">
 							</p:inputText>
@@ -184,11 +183,37 @@
 						</p:row>
 					</p:column>
 
+					<p:column>
+						<p:row>
+							<h:outputLabel for="autoCompletePagador" value="Responsável: " />
+						</p:row>
+					</p:column>
+
+					<p:column>
+						<p:row>
+							<p:autoComplete id="autoCompletePagador" required="true"
+								requiredMessage="Informe o pagador."
+								completeMethod="#{tituloBeanView.pesquisarPagador}"
+								minQueryLength="4" placeholder="Digite 4 letras min"
+								queryDelay="3000"
+								value="#{tituloBeanView.objetoSelecionado.ent_codigo}" var="ent"
+								itemValue="#{ent}" itemLabel="#{ent.ent_nomefantasia}"
+								converter="entidadeConverter">
+							</p:autoComplete>
+						</p:row>
+					</p:column>
+
+					<p:column>
+						<p:row>
+							<p:message for="autoCompletePagador" />
+						</p:row>
+					</p:column>
+
 				</p:panelGrid>
 			</p:panel>
 
-			<div class="espacoBranco"/>
-			
+			<div class="espacoBranco" />
+
 			<util:botoesCrud managedBeanView="#{tituloBeanView}"
 				camposReload=":formTamplete:msg, tableResult"
 				botaoNovo="#{contextoBean.possuiAcesso('FINANCEIRO_NOVO', 'ADMIN')}"
@@ -198,7 +223,7 @@
 			</util:botoesCrud>
 		</h:form>
 
-		<div class="espacoBranco"/>
+		<div class="espacoBranco" />
 
 		<p:dataTable id="tableResult" rows="10"
 			emptyMessage="Não existem dados para mostrar" paginator="true"

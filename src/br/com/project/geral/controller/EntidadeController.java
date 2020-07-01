@@ -1,6 +1,7 @@
 package br.com.project.geral.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,11 @@ public class EntidadeController extends InplementacaoCrud<Entidade> implements I
 	 */
 	public boolean existeCpf(String cpf) throws Exception {
 		return super.findListByQueryDynamic("from Entidade where cpf = '" + cpf + "'").size() > 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Entidade> pequisarPorNome(String nome) throws Exception {
+		return (List<Entidade>) getSession().createQuery("from Entidade where ent_nomefantasia like '%" + nome + "%'").list();
 	}
 
 }
