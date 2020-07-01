@@ -43,7 +43,7 @@ public class OperacaoProduto implements Serializable {
 	@Column(nullable = false, length = 90)
 	private String descricao;
 
-	@IdentificaCampoPesquisa(campoConsulta = "descricao", descricaoCampo = "NÂ° OperaÃ§Ã£o")
+	@IdentificaCampoPesquisa(campoConsulta = "descricao", descricaoCampo = "Nº Operação")
 	@Column(nullable = false)
 	private Short nOperacao;
 
@@ -54,7 +54,7 @@ public class OperacaoProduto implements Serializable {
 	@Temporal(TemporalType.TIME)
 	private Date tempoEstimado;
 
-	@IdentificaCampoPesquisa(campoConsulta = "produto", descricaoCampo = "PN", principal = 1)
+	@IdentificaCampoPesquisa(campoConsulta = "produto.pn", descricaoCampo = "PN", principal = 1)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "produto_id")
 	@ForeignKey(name = "produto_fk")
