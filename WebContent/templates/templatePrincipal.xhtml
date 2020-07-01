@@ -157,6 +157,17 @@
 								</sec:ifAnyGranted>
 							</p:submenu>
 						</sec:ifAnyGranted>
+
+						
+						<sec:ifAnyGranted roles="CADASTRO_ACESSAR, ADMIN">
+							<p:submenu label="P.C.P" id="subMenuCadastroPCP">
+								<sec:ifAnyGranted roles="PCP_ACESSAR, ADMIN">
+									<p:menuitem value="Ordem de serviço" id="menuOrdemServico" immediate="true"
+										action="#{ordemServicoBeanView.redirecionarFindEntidade}" >
+									</p:menuitem>
+								</sec:ifAnyGranted>
+							</p:submenu>
+						</sec:ifAnyGranted>
 						
 						
 						<p:menuitem value="Início" id="menuinicio"
