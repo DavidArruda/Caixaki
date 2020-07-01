@@ -149,6 +149,12 @@
 										action="#{produtoBeanView.redirecionarFindEntidade}" >
 									</p:menuitem>
 								</sec:ifAnyGranted>
+								
+								<sec:ifAnyGranted roles="ENG_PRODUCAO_ACESSAR, ADMIN">
+									<p:menuitem value="Operação produto" id="menuOperacaoProduto" immediate="true"
+										action="#{operacaoProdutoBeanView.redirecionarFindEntidade}" >
+									</p:menuitem>
+								</sec:ifAnyGranted>
 							</p:submenu>
 						</sec:ifAnyGranted>
 						
