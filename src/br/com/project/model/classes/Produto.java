@@ -53,12 +53,20 @@ public class Produto implements Serializable {
 	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
 	private List<OperacaoProduto> operacoes = new ArrayList<OperacaoProduto>();
 
+	@NotAudited
+	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
+	private List<OrdemServico> ordensServico = new ArrayList<OrdemServico>();
+
 	@Version
 	@Column(name = "versionNum")
 	private int versionNum;
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getPn() {
@@ -101,8 +109,12 @@ public class Produto implements Serializable {
 		this.versionNum = versionNum;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public List<OrdemServico> getOrdensServico() {
+		return ordensServico;
+	}
+
+	public void setOrdensServico(List<OrdemServico> ordensServico) {
+		this.ordensServico = ordensServico;
 	}
 
 	public JSONObject getJson() {
