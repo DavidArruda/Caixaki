@@ -31,6 +31,7 @@
 		<mapping class="br.com.project.model.classes.Titulo" />
 		<mapping class="br.com.project.model.classes.Produto" />
 		<mapping class="br.com.project.model.classes.OperacaoProduto" />
+		<mapping class="br.com.project.model.classes.OrdemServico" />
 		
 
 		<listener class="org.hibernate.envers.event.AuditEventListener"
