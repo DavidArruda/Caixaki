@@ -140,6 +140,18 @@
 								
 							</p:submenu>
 						</sec:ifAnyGranted>
+
+						
+						<sec:ifAnyGranted roles="CADASTRO_ACESSAR, ADMIN">
+							<p:submenu label="Eng. Processo" id="subMenuCadastroEngProcesso">
+								<sec:ifAnyGranted roles="ENG_PRODUCAO_ACESSAR, ADMIN">
+									<p:menuitem value="Produto" id="menuProduto" immediate="true"
+										action="#{produtoBeanView.redirecionarFindEntidade}" >
+									</p:menuitem>
+								</sec:ifAnyGranted>
+							</p:submenu>
+						</sec:ifAnyGranted>
+						
 						
 						<p:menuitem value="Início" id="menuinicio"
 							onclick="redirecionarPagina('#{request.contextPath}', '/restrito/principal');"
