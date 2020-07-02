@@ -1,8 +1,10 @@
 package br.com.project.model.classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,6 +24,7 @@ import javax.persistence.Version;
 
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.primefaces.json.JSONObject;
 
 import br.com.project.annotation.IdentificaCampoPesquisa;
@@ -44,22 +48,27 @@ public class OperacaoProduto implements Serializable {
 	private String descricao;
 
 	@IdentificaCampoPesquisa(campoConsulta = "descricao", descricaoCampo = "Nº Operação")
-	@Column(nullable = false)
+	@Column(name = "n_operacao", nullable = false)
 	private Short nOperacao;
 
 	@Column(length = 45, nullable = false)
 	private String maquina;
 
-	@Column(nullable = true)
+	@Column(name = "tempo_estimado", nullable = true)
 	@Temporal(TemporalType.TIME)
 	private Date tempoEstimado;
 
 	@IdentificaCampoPesquisa(campoConsulta = "produto.pn", descricaoCampo = "PN", principal = 1)
+	@NotAudited
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "produto_id")
 	@ForeignKey(name = "produto_fk")
 	private Produto produto = new Produto();
-	
+
+	@NotAudited
+	@OneToMany(mappedBy = "operacaoProduto", fetch = FetchType.LAZY)
+	private List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<>();
+
 	@Version
 	@Column(name = "versionNum")
 	private int versionNum;
@@ -111,11 +120,19 @@ public class OperacaoProduto implements Serializable {
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
-	
+
+	public List<DimencaoInspecaoOperacao> getDimensoes() {
+		return dimensoes;
+	}
+
+	public void setDimensoes(List<DimencaoInspecaoOperacao> dimensoes) {
+		this.dimensoes = dimensoes;
+	}
+
 	protected int getVersionNum() {
 		return versionNum;
 	}
-	
+
 	protected void setVersionNum(int versionNum) {
 		this.versionNum = versionNum;
 	}
