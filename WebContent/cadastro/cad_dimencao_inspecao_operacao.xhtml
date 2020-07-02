@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/components"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/templatePrincipal.xhtml">
+	<ui:define name="corpo">
+		<h:form id="formCadastro" prependId="false">
+			<c:set var="isCadastro" value="true" scope="view" />
+			<p:panel header="Cadastro de cidade" id="panelCadastro">
+				<h:panelGrid id="gridDimencao" columns="3">
+					<h:outputLabel for="id" value="Código:" id="labelId" />
+					<p:inputText id="id" styleClass="estiloIdCadastro" disabled="true"
+						value="#{dimencaoInspecaoOperacaoBeanView.objetoSelecionado.id}" />
+					<h:outputLabel />
+
+					<h:outputLabel id="labelNCota" for="nCota" value="Nº cota * :" />
+					<p:inputText id="nCota" styleClass="estyleInputNome"
+						required="true" maxlength="4"
+						value="#{dimencaoInspecaoOperacaoBeanView.objetoSelecionado.nCota}"
+						requiredMessage="Informe o número da cota." />
+					<p:message for="nCota" />
+
+
+
+					<h:outputLabel id="labelValor" for="valor" value="Valor * :" />
+					<p:inputText id="valor" required="true" maxlength="9"
+						value="#{dimencaoInspecaoOperacaoBeanView.objetoSelecionado.valor}"
+						requiredMessage="Informe o valor.">
+						<f:convertNumber for="valor" type="number" />
+					</p:inputText>
+					<p:message for="valor" />
+
+
+					<h:outputLabel id="labelTolerancia" for="tolerancia"
+						value="Tolerância * :" />
+					<p:inputText id="tolerancia" required="true" maxlength="9"
+						value="#{dimencaoInspecaoOperacaoBeanView.objetoSelecionado.tolerancia}"
+						requiredMessage="Informe a tolerância." />
+					<p:message for="tolerancia" />
+
+					<h:outputLabel id="labelOperacaoProduto" for="operacaoProduto"
+						value="Operacão * :" />
+					<p:inputText id="operacaoProduto" required="true"
+						value="#{dimencaoInspecaoOperacaoBeanView.objetoSelecionado.operacaoProduto.id}"
+						requiredMessage="Informe a tolerância." />
+					<p:message for="operacaoProduto" />
+
+
+				</h:panelGrid>
+			</p:panel>
+
+			<div class="espacoBranco" />
+
+			<util:botoesCrud
+				managedBeanView="#{dimencaoInspecaoOperacaoBeanView}"
+				camposReload=":formTemplate:msg, tableResult"
+				botaoNovo="#{contextoBean.possuiAcesso('PRODUTO_NOVO', 'ADMIN')}"
+				botaoSalvar="#{contextoBean.possuiAcesso('PRODUTO_NOVO', 'ADMIN') and dimencaoInspecaoOperacaoBeanView.objetoSelecionado.id == null}"
+				botaoAtualizar="#{contextoBean.possuiAcesso('PRODUTO_EDITAR', 'ADMIN') and dimencaoInspecaoOperacaoBeanView.objetoSelecionado.id != null}">
+			</util:botoesCrud>
+
+		</h:form>
+
+		<script type="text/javascript" charset="UTF-8">
+			addFocoAoCampo("nCota");
+			gerenciaTeclaEnter();
+		</script>
+
+		<div class="espacoBranco" />
+
+		<p:dataTable id="tableResult"
+			value="#{dimencaoInspecaoOperacaoBeanView.list.list}" var="objeto"
+			emptyMessage="Nenhum resultado encontrado."
+			rows="5" paginator="true" paginatorPosition="bottom"
+			paginatorTemplate="{FirstPageLink}
+									{PreviousPageLink} {PageLinks}
+									{NextPageLink} {LastPageLink}
+									{RowsPerPageDropdown}">
+
+			<ui:include src="/resources/components/colunasDataTableDimencaoInspecaoOperacao.xhtml"></ui:include>
+
+		</p:dataTable>
+
+	</ui:define>
+</ui:composition>
+
+</html>
