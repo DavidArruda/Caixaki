@@ -169,6 +169,16 @@
 							</p:submenu>
 						</sec:ifAnyGranted>
 						
+						<sec:ifAnyGranted roles="QUALIDADE_ACESSAR, ADMIN">
+							<p:submenu label="Qualidade" id="subMenuCadastroQualidade">
+								<sec:ifAnyGranted roles="QUALIDADE_ACESSAR, ADMIN">
+									<p:menuitem value="Instrumento de medição" id="menuInstrumentoMedicao" immediate="true"
+										action="#{instrumentoMedicaoBeanView.redirecionarFindEntidade}" >
+									</p:menuitem>
+								</sec:ifAnyGranted>
+							</p:submenu>
+						</sec:ifAnyGranted>
+						
 						
 						<p:menuitem value="Início" id="menuinicio"
 							onclick="redirecionarPagina('#{request.contextPath}', '/restrito/principal');"
