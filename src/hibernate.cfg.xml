@@ -33,6 +33,7 @@
 		<mapping class="br.com.project.model.classes.OperacaoProduto" />
 		<mapping class="br.com.project.model.classes.OrdemServico" />
 		<mapping class="br.com.project.model.classes.InstrumentoMedicao" />
+		<mapping class="br.com.project.model.classes.DimencaoInspecaoOperacao" />
 		
 		<listener class="org.hibernate.envers.event.AuditEventListener"
 			type="post-insert" />
