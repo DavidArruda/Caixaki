@@ -5,14 +5,15 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -26,14 +27,13 @@ import br.com.project.annotation.IdentificaCampoPesquisa;
 @Audited
 @Entity
 @Table(name = "dimencao_inspecao_operacao")
-@SequenceGenerator(name = "dimencao_inspecao_operacao_seq", sequenceName = "dimencao_inspecao_operacao_seq", initialValue = 1, allocationSize = 1)
 public class DimencaoInspecaoOperacao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@IdentificaCampoPesquisa(descricaoCampo = "Código", campoConsulta = "id")
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dimencao_inspecao_operacao_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@IdentificaCampoPesquisa(descricaoCampo = "Nº cota", campoConsulta = "nCota")
@@ -44,12 +44,12 @@ public class DimencaoInspecaoOperacao implements Serializable {
 	private BigDecimal valor;
 
 	@IdentificaCampoPesquisa(descricaoCampo = "Tolerância", campoConsulta = "tolerancia")
-	@Column(length = 7, nullable = false)
+	@Column(length = 12, nullable = false)
 	private String tolerancia;
 
 	@IdentificaCampoPesquisa(descricaoCampo = "Operação", campoConsulta = "operacaoProduto.nOperacao")
 	@NotAudited
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "operacao_produto_id", nullable = false)
 	@ForeignKey(name = "operacao_produto_fk")
 	private OperacaoProduto operacaoProduto = new OperacaoProduto();
