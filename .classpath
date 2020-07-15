@@ -64,7 +64,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-ooxml-schemas-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/poi-scratchpad-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/postgresql-9.1-903.jdbc4.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-4.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/qrcode.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/redmond-1.0.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/shared-bouncycastle-reduced-0.9.12.jar"/>
@@ -98,5 +97,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections4-4.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasperreports-6.12.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-4.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
