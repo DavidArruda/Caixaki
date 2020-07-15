@@ -10,78 +10,139 @@
 
 <ui:composition template="/templates/templatePrincipal.xhtml">
 	<ui:define name="corpo">
-		<h:form id="formCadastro" prependId="false">
-			<p:panel header="Cadastro de Operação" id="panelCadastro">
-				<p:panelGrid id="gridOp" columns="3">
-					<h:outputLabel for="id" value="Código : " />
-					<p:inputText id="id"
-						value="#{operacaoProdutoBeanView.objetoSelecionado.id}"
-						style="width:100px;" />
-					<p:spacer />
+		<h:form id="formCadastro" prependId="false" >
+			<p:fieldset legend="Nova Operação">
+					<p:panelGrid id="gridOp" columns="3">
+						<h:outputLabel for="id" value="Código : " />
+						<p:inputText id="id"
+							value="#{operacaoProdutoBeanView.objetoSelecionado.id}"
+							readonly="true"
+							style="width:100px;" />
+						<p:spacer />
 
-					<p:column>
-						<p:row>
-							<h:outputLabel id="labelProduto" for="autoCompleteProduto" value="Produto: * " />
-						</p:row>
-					</p:column>
-					<p:column>
-						<p:row>
-							<p:autoComplete id="autoCompleteProduto" required="true"
-								requiredMessage="Informe o produto."
-								completeMethod="#{operacaoProdutoBeanView.pesquisarProduto}"
-								minQueryLength="3" placeholder="Digite 3 letras min"
-								queryDelay="1000"
-								value="#{operacaoProdutoBeanView.objetoSelecionado.produto}" var="prd"
-								itemValue="#{prd}" itemLabel="#{prd.pn}"
-								converter="produtoConverter">
-							</p:autoComplete>
-						</p:row>
-					</p:column>
-					<p:column>
-						<p:row>
-							<p:message for="autoCompleteProduto" />
-						</p:row>
-					</p:column>
+						<p:column>
+							<p:row>
+								<h:outputLabel id="labelProduto" for="autoCompleteProduto"
+									value="Produto: * " />
+							</p:row>
+						</p:column>
+						<p:column>
+							<p:row>
+								<p:autoComplete id="autoCompleteProduto" required="true"
+									requiredMessage="Informe o produto."
+									completeMethod="#{operacaoProdutoBeanView.pesquisarProduto}"
+									minQueryLength="3" placeholder="Digite 3 letras min"
+									queryDelay="1000"
+									value="#{operacaoProdutoBeanView.objetoSelecionado.produto}"
+									var="prd" itemValue="#{prd}" itemLabel="#{prd.pn}"
+									converter="produtoConverter">
+								</p:autoComplete>
+							</p:row>
+						</p:column>
+						<p:column>
+							<p:row>
+								<p:message for="autoCompleteProduto" />
+							</p:row>
+						</p:column>
 
-					<h:outputLabel for="n_operacao" value="N° Operação* : " />
-					<p:inputText
-						value="#{operacaoProdutoBeanView.objetoSelecionado.nOperacao}"
-						id="n_operacao" required="true"
-						requiredMessage="Informe o número da operação."
-						style="width:100px;" />
-					<p:message for="n_operacao" />
+						<h:outputLabel for="n_operacao" value="N° Operação* : " />
+						<p:inputText
+							value="#{operacaoProdutoBeanView.objetoSelecionado.nOperacao}"
+							id="n_operacao" required="true"
+							requiredMessage="Informe o número da operação."
+							style="width:100px;" />
+						<p:message for="n_operacao" />
+
+						<h:outputLabel for="maquina" value="Máquina* : " />
+						<p:inputText
+							value="#{operacaoProdutoBeanView.objetoSelecionado.maquina}"
+							id="maquina" required="true" requiredMessage="Informe a máquina."
+							style="width:200px;" />
+						<p:message for="maquina" />
+
+						<h:outputLabel for="tempo_estimado" value="Tempo* : " />
+						<p:calendar timeOnly="true" id="tempo_estimado"
+							value="#{operacaoProdutoBeanView.objetoSelecionado.tempoEstimado}"
+							pattern="HH:mm:ss" locale="pt_BR" 
+							required="true" requiredMessage="Informe o tempo estimado."/>
+						<p:message for="tempo_estimado" />
+
+						<h:outputLabel for="descricao" value="Descrição" />
+						<p:inputTextarea
+							value="#{operacaoProdutoBeanView.objetoSelecionado.descricao}"
+							id="descricao" required="true"
+							requiredMessage="Informe a descrição" style="width:350px;" />
+						<p:message for="descricao" />
+
+					</p:panelGrid>
+
+				</p:fieldset>
+				
+				<div class="espacoBranco"/>
+
+				<p:fieldset legend="Inspeção na fase"
+					rendered="#{operacaoProdutoBeanView.objetoSelecionado.id != null}">
+					<h:panelGrid id="gridDimencao" columns="3">
+						<h:outputLabel for="dimencaoId" value="Código:" id="labelId" />
+						<p:inputText id="dimencaoId" styleClass="estiloIdCadastro"
+							disabled="true"
+							value="#{operacaoProdutoBeanView.dimencaoInspecaoOperacao.id}" />
+						<h:outputLabel />
+
+						<h:outputLabel id="labelNCota" for="nCota" value="Nº cota * :" />
+						<p:inputText id="nCota" styleClass="estyleInputNome"
+							required="true" maxlength="4"
+							value="#{operacaoProdutoBeanView.dimencaoInspecaoOperacao.nCota}"
+							requiredMessage="Informe o número da cota." />
+						<p:message for="nCota" />
+
+						<h:outputLabel id="labelValor" for="valor" value="Valor * :" />
+						<p:inputText id="valor" required="true" maxlength="9"
+							value="#{operacaoProdutoBeanView.dimencaoInspecaoOperacao.valor}"
+							requiredMessage="Informe o valor.">
+							<f:convertNumber for="valor" type="number" />
+						</p:inputText>
+						<p:message for="valor" />
+
+
+						<h:outputLabel id="labelTolerancia" for="tolerancia"
+							value="Tolerância * :" />
+						<p:inputText id="tolerancia" required="true" maxlength="12"
+							value="#{operacaoProdutoBeanView.dimencaoInspecaoOperacao.tolerancia}"
+							requiredMessage="Informe a tolerância." />
+						<p:message for="tolerancia" />
+
+						<p:commandButton id="addDimensoes" ajax="true"
+							update="tableResult"
+							actionListener="#{operacaoProdutoBeanView.addDimencao}"
+							value="ADICIONAR">
+						</p:commandButton>
+
+					</h:panelGrid>
+
+					<p:spacer height="50"/>
 					
-					<h:outputLabel for="maquina" value="Máquina* : " />
-					<p:inputText
-						value="#{operacaoProdutoBeanView.objetoSelecionado.maquina}"
-						id="maquina" required="true"
-						requiredMessage="Informe a máquina." style="width:200px;" />
-					<p:message for="maquina" />
+					<p:panel header="Dados">
+						<p:dataTable id="tableResult" 
+							value="#{operacaoProdutoBeanView.dimensoes}" var="objeto"
+							emptyMessage="Nenhum resultado encontrado." rows="5"
+							paginator="true" paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink}
+							{PreviousPageLink} {PageLinks}
+							{NextPageLink} {LastPageLink}
+							{RowsPerPageDropdown}">
+	
+							<ui:include
+								src="/resources/components/colunasDataTableDimencaoInspecaoOperacao.xhtml">
+							</ui:include>
+						</p:dataTable>
+						
+					</p:panel>
 
-					<h:outputLabel for="tempo_estimado" value="Tempo* : " />
+				</p:fieldset>
 
-					<p:inputText
-						value="#{operacaoProdutoBeanView.objetoSelecionado.tempoEstimado}"
-						id="tempo_estimado" required="true"
-						requiredMessage="Informe o tempo estimado." style="width:100px;">
-
-						<f:convertDateTime timeStyle="full" locale="pt_BR"
-							pattern="HH:mm:ss" timeZone="GMT-03:00" />
-					</p:inputText>
-					<p:message for="tempo_estimado" />
-
-
-					<h:outputLabel for="descricao" value="Descrição" />
-					<p:inputTextarea
-						value="#{operacaoProdutoBeanView.objetoSelecionado.descricao}"
-						id="descricao" required="true"
-						requiredMessage="Informe a descrição" style="width:350px;" />
-					<p:message for="descricao" />
-
-				</p:panelGrid>
-			</p:panel>
 			
-			<div class="espacoBranco" />
+			<div class="espacoBranco"/>
 
 			<util:botoesCrud managedBeanView="#{operacaoProdutoBeanView}"
 				camposReload=":formTamplete:msg, tableResult"
@@ -97,21 +158,7 @@
 			addFocoAoCampo('produto2_id');
 			gerenciaTeclaEnter();
 		</script>
-
-		<div class="espacoBranco" />
-
-		<p:dataTable id="tableResult" value="#{operacaoProdutoBeanView.list}"
-			rendered="#{operacaoProdutoBeanView.list.list.size() > 0}"
-			var="objeto" rows="10" paginatorPosition="bottom" paginator="true"
-			emptyMessage="Não existem valores para exibição." lazy="true"
-			paginatorTemplate=" {FirstPageLink}
-								   {PreviousPageLink} {PageLinks} 
-	 							   {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-
-			<ui:include
-				src="/resources/components/colunasDataTableOperacaoProduto.xhtml" />
-		</p:dataTable>
-
+		
 	</ui:define>
 </ui:composition>
 </html>
