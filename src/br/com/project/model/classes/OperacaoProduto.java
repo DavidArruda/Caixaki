@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -60,14 +61,14 @@ public class OperacaoProduto implements Serializable {
 
 	@IdentificaCampoPesquisa(campoConsulta = "produto.pn", descricaoCampo = "PN", principal = 1)
 	@NotAudited
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "produto_id")
 	@ForeignKey(name = "produto_fk")
 	private Produto produto = new Produto();
 
 	@NotAudited
-	@OneToMany(mappedBy = "operacaoProduto", fetch = FetchType.LAZY)
-	private List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<>();
+	@OneToMany(mappedBy = "operacaoProduto", cascade = CascadeType.ALL)
+	private List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<DimencaoInspecaoOperacao>();
 
 	@Version
 	@Column(name = "versionNum")
@@ -167,6 +168,13 @@ public class OperacaoProduto implements Serializable {
 		map.put("id", id);
 		map.put("descricao", descricao);
 		return new JSONObject(map);
+	}
+
+	@Override
+	public String toString() {
+		return "OperacaoProduto [id=" + id + ", descricao=" + descricao + ", nOperacao=" + nOperacao + ", maquina="
+				+ maquina + ", tempoEstimado=" + tempoEstimado + ", produto=" + produto + ", dimensoes=" + dimensoes
+				+ "]";
 	}
 
 }
