@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,7 +51,7 @@ public class Produto implements Serializable {
 	private String descricao;
 
 	@NotAudited
-	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<OperacaoProduto> operacoes = new ArrayList<OperacaoProduto>();
 
 	@NotAudited
