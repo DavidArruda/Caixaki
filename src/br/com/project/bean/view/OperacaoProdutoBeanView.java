@@ -1,5 +1,6 @@
 package br.com.project.bean.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import br.com.framework.interfac.crud.InterfaceCrud;
 import br.com.project.bean.geral.BeanManagedViewAbstract;
 import br.com.project.carregamento.lazy.CarregamentoLazyListForObject;
+import br.com.project.geral.controller.DimencaoInspecaoOperacaoController;
 import br.com.project.geral.controller.OperacaoProdutoController;
 import br.com.project.geral.controller.ProdutoController;
+import br.com.project.model.classes.DimencaoInspecaoOperacao;
 import br.com.project.model.classes.OperacaoProduto;
 import br.com.project.model.classes.Produto;
 
@@ -26,8 +29,10 @@ import br.com.project.model.classes.Produto;
 public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 
 	private static final long serialVersionUID = 1L;
-	private CarregamentoLazyListForObject<OperacaoProduto> list = new CarregamentoLazyListForObject<>();
+	private CarregamentoLazyListForObject<DimencaoInspecaoOperacao> list = new CarregamentoLazyListForObject<>();
 	private OperacaoProduto objetoSelecionado = new OperacaoProduto();
+	private DimencaoInspecaoOperacao dimencaoInspecaoOperacao = new DimencaoInspecaoOperacao();
+	private List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<DimencaoInspecaoOperacao>();
 	private String url = "/cadastro/cad_operacao_produto.jsf?faces-redirect=true";
 	private String urlFind = "/cadastro/find_operacao_produto.jsf?faces-redirect=true";
 
@@ -37,12 +42,31 @@ public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 	@Autowired
 	ProdutoController produtoController;
 
+	@Autowired
+	DimencaoInspecaoOperacaoController dimencaoInspecaoOperacaoController;
+	
+	public List<DimencaoInspecaoOperacao> getDimensoes() {
+		return dimensoes;
+	}
+	
+	public void setDimensoes(List<DimencaoInspecaoOperacao> dimensoes) {
+		this.dimensoes = dimensoes;
+	}
+
 	public void setOperacaoProdutoController(OperacaoProdutoController operacaoProdutoController) {
 		this.operacaoProdutoController = operacaoProdutoController;
 	}
 
 	public OperacaoProdutoController getOperacaoProdutoController() {
 		return operacaoProdutoController;
+	}
+
+	public DimencaoInspecaoOperacao getDimencaoInspecaoOperacao() {
+		return dimencaoInspecaoOperacao;
+	}
+
+	public void setDimencaoInspecaoOperacao(DimencaoInspecaoOperacao dimencaoInspecaoOperacao) {
+		this.dimencaoInspecaoOperacao = dimencaoInspecaoOperacao;
 	}
 
 	public List<Produto> pesquisarProduto(String pn) throws Exception {
@@ -83,7 +107,7 @@ public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 		return objetoSelecionado;
 	}
 
-	public CarregamentoLazyListForObject<OperacaoProduto> getList() {
+	public CarregamentoLazyListForObject<DimencaoInspecaoOperacao> getList() {
 		return list;
 	}
 
@@ -94,15 +118,19 @@ public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 		objetoSelecionado = new OperacaoProduto();
 	}
 
+	public void addDimencao() {
+		dimencaoInspecaoOperacao.setOperacaoProduto(objetoSelecionado);
+		objetoSelecionado.getDimensoes().add(dimencaoInspecaoOperacao);
+		dimensoes.add(dimencaoInspecaoOperacao);
+		dimencaoInspecaoOperacao = new DimencaoInspecaoOperacao();
+	}
+
 	@Override
 	public void saveNotReturn() throws Exception {
-		// if (validarCampoObrigatorio(objetoSelecionado)) {
-		list.clean();
 		objetoSelecionado = operacaoProdutoController.merge(objetoSelecionado);
-		list.add(objetoSelecionado);
-		objetoSelecionado = new OperacaoProduto();
+		dimensoes.clear();
+		dimencaoInspecaoOperacao = new DimencaoInspecaoOperacao();
 		sucesso();
-		// }
 	}
 
 	@Override
@@ -114,7 +142,6 @@ public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 	public void excluir() throws Exception {
 		if (objetoSelecionado.getId() != null && objetoSelecionado.getId() > 0) {
 			operacaoProdutoController.delete(objetoSelecionado);
-			list.remove(objetoSelecionado);
 			objetoSelecionado = new OperacaoProduto();
 			sucesso();
 		}
@@ -150,7 +177,6 @@ public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 
 	@Override
 	protected Class<OperacaoProduto> getClassImplemt() {
-		// TODO Auto-generated method stub
 		return OperacaoProduto.class;
 	}
 
