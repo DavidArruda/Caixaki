@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/components"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/templatePrincipal.xhtml">
+	<ui:define name="corpo">
+		<h:form id="formCadastro" prependId="false">
+
+			<c:set var="isCadastro" value="true" scope="view" />
+			<p:panel header="Cadastro de apontamento" id="panelCadastro">
+				<p:fieldset legend="Dados Apontamentos">
+					<h:panelGrid id="gridApontamento" columns="3">
+						<h:outputLabel for="id" value="Código:" id="labelId" />
+						<p:inputText id="id" styleClass="estiloIdCadastro" disabled="true"
+							value="#{apontamentoBeanView.objetoSelecionado.id}" />
+						<h:outputLabel />
+
+						<h:outputLabel for="inicio" value="Início * : " />
+						<p:calendar id="inicio"
+							value="#{apontamentoBeanView.objetoSelecionado.inicio}"
+							pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR" required="true"
+							requiredMessage="Informe a data inicial." />
+						<p:message for="inicio" />
+
+						<h:outputLabel for="termino" value="Término * : " />
+						<p:calendar id="termino"
+							value="#{apontamentoBeanView.objetoSelecionado.termino}"
+							pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR" required="true"
+							requiredMessage="Informe a data de término." />
+						<p:message for="termino" />
+
+						<h:outputLabel id="labelQuantidade" for="quantidade"
+							value="Quantidade * :" />
+						<p:inputText id="quantidade" styleClass="estyleInputNome"
+							required="true" maxlength="4"
+							value="#{apontamentoBeanView.objetoSelecionado.quantidade}"
+							requiredMessage="Informe a quantidade." />
+						<p:message for="quantidade" />
+
+						<h:outputLabel for="ordemServico" id="labelOs" value="O.S * :" />
+						<p:inputText id="ordemServico" required="true"
+							style="width:200px;"
+							requiredMessage="Informe a ordem de serviço."
+							value="#{apontamentoBeanView.objetoSelecionado.ordemServico.id}">
+						</p:inputText>
+						<p:message for="ordemServico" />
+
+						<h:outputLabel for="usuario" id="labelUser" value="Usuário * :" />
+						<p:inputText id="usuario" required="true" style="width:200px;"
+							requiredMessage="Informe o usuário."
+							value="#{apontamentoBeanView.objetoSelecionado.entidade.ent_codigo}">
+						</p:inputText>
+						<p:message for="ordemServico" />
+					</h:panelGrid>
+				</p:fieldset>
+				
+				<div class="espacoBranco" />
+				
+				<p:fieldset legend="Medição">
+					<h:panelGrid id="panelGridMedicao" columns="3">
+						<h:outputLabel for="idMedicao" value="Código:" id="labelIdMedicao" />
+						<p:inputText id="idMedicao" styleClass="estiloIdCadastro" disabled="true"
+							value="#{apontamentoBeanView.medicaoApontamento.id}" />
+						<h:outputLabel />
+
+						<h:outputLabel for="dataMedicao" value="Data medição * : " />
+						<p:calendar id="dataMedicao"
+							value="#{apontamentoBeanView.medicaoApontamento.dataMedicao}"
+							pattern="dd/MM/yyyy" locale="pt_BR" required="true"
+							requiredMessage="Informe a data da medição." />
+						<p:message for="dataMedicao" />
+
+						<h:outputLabel for="horarioMedicao" value="Horário medição * : " />
+						<p:calendar id="horarioMedicao" timeOnly="true"
+							value="#{apontamentoBeanView.medicaoApontamento.horarioMedicao}"
+							pattern="HH:mm:ss" locale="pt_BR" required="true"
+							requiredMessage="Informe o horário do apontamento." />
+						<p:message for="horarioMedicao" />
+					</h:panelGrid>
+					
+				</p:fieldset>
+
+			</p:panel>
+
+			<div class="espacoBranco" />
+
+			<util:botoesCrud managedBeanView="#{apontamentoBeanView}"
+				camposReload=":formTemplate:msg, tableResult"
+				botaoNovo="#{contextoBean.possuiAcesso('APONTAMENTO_NOVO', 'ADMIN')}"
+				botaoSalvar="#{contextoBean.possuiAcesso('APONTAMENTO_NOVO', 'ADMIN') and apontamentoBeanView.objetoSelecionado.id == null}"
+				botaoAtualizar="#{contextoBean.possuiAcesso('APONTAMENTO_EDITAR', 'ADMIN') and apontamentoBeanView.objetoSelecionado.id != null}">
+
+			</util:botoesCrud>
+
+		</h:form>
+
+		<script type="text/javascript" charset="UTF-8">
+			addFocoAoCampo("quantidade");
+			gerenciaTeclaEnter();
+		</script>
+
+		<div class="espacoBranco" />
+
+		<p:dataTable id="tableResult" value="#{apontamentoBeanView.list.list}"
+			var="objeto" emptyMessage="Nenhum resultado encontrado."
+			rendered="#{apontamentoBeanView.list.list.size() > 0}" rows="5"
+			paginator="true" paginatorPosition="bottom"
+			paginatorTemplate="{FirstPageLink}
+									{PreviousPageLink} {PageLinks}
+									{NextPageLink} {LastPageLink}
+									{RowsPerPageDropdown}">
+
+			<ui:include
+				src="/resources/components/colunasDataTableApontamento.xhtml"></ui:include>
+
+		</p:dataTable>
+
+	</ui:define>
+</ui:composition>
+
+</html>
