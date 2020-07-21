@@ -1,9 +1,12 @@
 package br.com.project.model.classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -38,7 +42,7 @@ public class MedicaoApontamento implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_medicao", nullable = false)
 	private Date dataMedicao;
-	
+
 	@Temporal(TemporalType.TIME)
 	@Column(nullable = false, name = "medicao_apontamento")
 	private Date horarioMedicao;
@@ -50,10 +54,13 @@ public class MedicaoApontamento implements Serializable {
 	@ForeignKey(name = "apontamento_fk")
 	private Apontamento apontamento = new Apontamento();
 
+	@OneToMany(mappedBy = "medicaoApontamento", cascade = CascadeType.ALL)
+	private List<DimencaoApontamentoMedida> dimensoes = new ArrayList<>();
+
 	@Version
 	@Column(name = "versionNum")
 	private int versionNum;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -84,6 +91,14 @@ public class MedicaoApontamento implements Serializable {
 
 	public void setApontamento(Apontamento apontamento) {
 		this.apontamento = apontamento;
+	}
+
+	public List<DimencaoApontamentoMedida> getDimensoes() {
+		return dimensoes;
+	}
+
+	public void setDimensoes(List<DimencaoApontamentoMedida> dimensoes) {
+		this.dimensoes = dimensoes;
 	}
 
 	protected int getVersionNum() {
@@ -118,7 +133,5 @@ public class MedicaoApontamento implements Serializable {
 			return false;
 		return true;
 	}
-
-
 
 }
