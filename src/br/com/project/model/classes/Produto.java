@@ -18,6 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.primefaces.json.JSONObject;
@@ -39,6 +40,7 @@ public class Produto implements Serializable {
 	private Long id;
 
 	@IdentificaCampoPesquisa(descricaoCampo = "PN", campoConsulta = "pn", principal = 1)
+	@NaturalId(mutable = false)
 	@Column(name = "pn", length = 13, nullable = false, unique = true)
 	private String pn;
 
