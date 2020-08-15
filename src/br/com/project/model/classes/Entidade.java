@@ -21,14 +21,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.CollectionOfElements;
 import org.hibernate.envers.Audited;
 import org.primefaces.json.JSONObject;
 
 import br.com.project.acessos.Permissao;
 import br.com.project.annotation.IdentificaCampoPesquisa;
 
-@SuppressWarnings("deprecation")
 @Audited
 @Entity
 @SequenceGenerator(name = "entidade_seq", sequenceName = "entidade_seq", initialValue = 1, allocationSize = 1)
@@ -60,7 +58,6 @@ public class Entidade implements Serializable {
 
 	// Mapeamento para relacionar tabelas sem a necessidade de criar uma classe
 	// java.
-	@CollectionOfElements
 	@ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
 	@JoinTable(name = "entidadeacesso", uniqueConstraints = {
 			@UniqueConstraint(name = "unique_acesso_entidade_key", columnNames = { "ent_codigo",
