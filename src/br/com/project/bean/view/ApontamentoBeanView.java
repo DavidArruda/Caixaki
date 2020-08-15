@@ -30,6 +30,8 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 	private final String urlFind = "/cadastro/find_apontamento.jsf?faces-redirect=true";
 
 	private CarregamentoLazyListForObject<Apontamento> list = new CarregamentoLazyListForObject<>();
+	
+	//private SrvOperacaoProduto SrvOperacaoProduto
 
 	@Autowired
 	private ApontamentoController apontamentoController;
