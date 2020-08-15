@@ -11,4 +11,9 @@ public class DaoApontamento extends InplementacaoCrud<Apontamento> implements Re
 
 	private static final long serialVersionUID = 1L;
 
+	@Override
+	public Apontamento apontar(Apontamento apontamento) throws Exception {
+		return super.merge(apontamento);
+	}
+
 }
