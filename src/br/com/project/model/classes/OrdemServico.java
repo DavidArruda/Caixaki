@@ -1,10 +1,13 @@
 package br.com.project.model.classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -49,10 +53,18 @@ public class OrdemServico implements Serializable {
 	private Integer quantidade;
 
 	@IdentificaCampoPesquisa(campoConsulta = "produto.pn", descricaoCampo = "PN Produto")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "produto_id", nullable = false)
 	@ForeignKey(name = "produto_fk")
 	private Produto produto = new Produto();
+
+	// bi-directional many-to-one association to StatusO
+	@OneToMany(mappedBy = "ordemServico", cascade = CascadeType.ALL)
+	private List<StatusO> statusOs = new ArrayList<>();
+
+	// bi-directional many-to-one association to Apontamento
+	@OneToMany(mappedBy = "ordemServico", cascade = CascadeType.ALL)
+	private List<Apontamento> apontamentos = new ArrayList<>();
 
 	@Version
 	@Column(name = "versionNum")
@@ -93,9 +105,53 @@ public class OrdemServico implements Serializable {
 	public Produto getProduto() {
 		return produto;
 	}
-	
+
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public List<Apontamento> getApontamentos() {
+		return this.apontamentos;
+	}
+
+	public void setApontamentos(List<Apontamento> apontamentos) {
+		this.apontamentos = apontamentos;
+	}
+
+	public Apontamento addApontamento(Apontamento apontamento) {
+		getApontamentos().add(apontamento);
+		apontamento.setOrdemServico(this);
+
+		return apontamento;
+	}
+
+	public Apontamento removeApontamento(Apontamento apontamento) {
+		getApontamentos().remove(apontamento);
+		apontamento.setOrdemServico(null);
+
+		return apontamento;
+	}
+
+	public List<StatusO> getStatusOs() {
+		return this.statusOs;
+	}
+
+	public void setStatusOs(List<StatusO> statusOs) {
+		this.statusOs = statusOs;
+	}
+
+	public StatusO addStatusO(StatusO statusO) {
+		getStatusOs().add(statusO);
+		statusO.setOrdemServico(this);
+
+		return statusO;
+	}
+
+	public StatusO removeStatusO(StatusO statusO) {
+		getStatusOs().remove(statusO);
+		statusO.setOrdemServico(null);
+
+		return statusO;
 	}
 
 	protected int getVersionNum() {
@@ -107,7 +163,7 @@ public class OrdemServico implements Serializable {
 	}
 
 	public JSONObject getJson() {
-		Map<Object, Object> map = new HashMap<Object, Object>();
+		Map<Object, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("produtoOs", produto);
 		return new JSONObject(map);
