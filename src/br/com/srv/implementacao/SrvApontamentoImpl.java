@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.project.model.classes.Apontamento;
 import br.com.repository.interfaces.RepositoryApontamento;
-import br.com.repository.interfaces.RepositoryOperacaoProduto;
 import br.com.srv.interfaces.SrvApontamento;
+import br.com.srv.interfaces.SrvStatusOs;
 
 @Service
 public class SrvApontamentoImpl implements SrvApontamento {
@@ -16,10 +16,9 @@ public class SrvApontamentoImpl implements SrvApontamento {
 	@Autowired
 	RepositoryApontamento repositoryApontamento;
 	
-	//@Autowired
-	//RepositoryOperacaoProduto repositoryOperacaoProduto;
+	@Autowired
+	SrvStatusOs srvStatusOs;
 
-	/*
 	@Override
 	public Apontamento apontar(Apontamento apontamento) throws Exception {
 		return repositoryApontamento.apontar(apontamento);
@@ -27,8 +26,7 @@ public class SrvApontamentoImpl implements SrvApontamento {
 
 	@Override
 	public Long atualizaStatusOs(Long idProduto, Long idOperacaoAtual) throws Exception {
-		return repositoryOperacaoProduto.proximaOperacao(idProduto, idOperacaoAtual);
+		return srvStatusOs.atualizaStatusOs(idProduto, idOperacaoAtual);
 	}
-	*/
 	
 }
