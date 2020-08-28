@@ -17,5 +17,13 @@ public interface RepositoryOperacaoProduto extends Serializable {
 	 * @throws Exception
 	 */
 	Long proximaOperacao(Long produtoId, Long idOperacaoAtual) throws Exception;
+	
+	/**
+	 * Método que retorna o id(identificador) da primeira operação de um determinado produto.
+	 * @param idProduto
+	 * @return Long
+	 * @throws Exception
+	 */
+	Long operacaoInicial(String idProduto) throws Exception;
 
 }
