@@ -85,11 +85,11 @@ public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 	public void buscarProduto(HttpServletResponse httpServletResponse,
 			@RequestParam(value = "codigoProduto") Long codProduto) throws Exception {
 
-		Produto Produto = (Produto) produtoController.findById(Produto.class, codProduto);
+		Produto produto = (Produto) produtoController.findById(Produto.class, codProduto);
 
-		if (Produto != null) {
-			objetoSelecionado.setProduto(Produto);
-			httpServletResponse.getWriter().write(Produto.getJson().toString());
+		if (produto != null) {
+			objetoSelecionado.setProduto(produto);
+			httpServletResponse.getWriter().write(produto.getJson().toString());
 		}
 	}
 
