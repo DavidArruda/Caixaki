@@ -182,13 +182,19 @@
 						<sec:ifAnyGranted roles="APONTAMENTO_ACESSAR, ADMIN">
 							<p:submenu label="Produção" id="subMenuCadastroProducao">
 								<sec:ifAnyGranted roles="APONTAMENTO_ACESSAR, ADMIN">
-									<p:menuitem value="Apontamento" id="menuApontamento" immediate="true"
+									<p:menuitem value="Apontamentos" id="menuApontamento" immediate="true"
 										action="#{apontamentoBeanView.redirecionarFindEntidade}" >
 									</p:menuitem>
 								</sec:ifAnyGranted>
+								
+								<sec:ifAnyGranted roles="APONTAMENTO_ACESSAR, ADMIN">
+									<p:menuitem value="Apontar O.S" id="menuApontamentoOs" immediate="true"
+										action="#{statusOsBeanView.redirecionarFindEntidade}" >
+									</p:menuitem>
+								</sec:ifAnyGranted>
 							</p:submenu>
+							
 						</sec:ifAnyGranted>
-						
 						
 						<p:menuitem value="Início" id="menuinicio"
 							onclick="redirecionarPagina('#{request.contextPath}', '/restrito/principal');"
