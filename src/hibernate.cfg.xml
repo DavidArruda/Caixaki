@@ -37,6 +37,8 @@
 		<mapping class="br.com.project.model.classes.Apontamento" />
 		<mapping class="br.com.project.model.classes.MedicaoApontamento" />
 		<mapping class="br.com.project.model.classes.DimencaoApontamentoMedida" />
+		<mapping class="br.com.project.model.classes.StatusO" />
+		
 		
 		<listener class="org.hibernate.envers.event.AuditEventListener"
 			type="post-insert" />
