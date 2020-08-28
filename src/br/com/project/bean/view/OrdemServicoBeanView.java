@@ -16,8 +16,10 @@ import br.com.project.bean.geral.BeanManagedViewAbstract;
 import br.com.project.carregamento.lazy.CarregamentoLazyListForObject;
 import br.com.project.geral.controller.OrdemServicoController;
 import br.com.project.geral.controller.ProdutoController;
+import br.com.project.model.classes.OperacaoProduto;
 import br.com.project.model.classes.OrdemServico;
 import br.com.project.model.classes.Produto;
+import br.com.project.model.classes.StatusO;
 
 @Controller
 @Scope("session")
@@ -34,7 +36,7 @@ public class OrdemServicoBeanView extends BeanManagedViewAbstract {
 	private OrdemServicoController ordemServicoController;
 
 	@Autowired
-	private ProdutoController ProdutoController;
+	private ProdutoController produtoController;
 
 	public OrdemServicoController getOrdemServicoController() {
 		return ordemServicoController;
@@ -45,7 +47,7 @@ public class OrdemServicoBeanView extends BeanManagedViewAbstract {
 	}
 
 	public List<Produto> pesquisarProduto(String pn) throws Exception {
-		return ProdutoController.pesquisarProduto(pn);
+		return produtoController.pesquisarProduto(pn);
 	}
 
 	@Override
@@ -89,13 +91,23 @@ public class OrdemServicoBeanView extends BeanManagedViewAbstract {
 
 	@Override
 	public void saveNotReturn() throws Exception {
-		// if (validarCampoObrigatorio(objetoSelecionado)) {
 		list.clean();
 		objetoSelecionado = ordemServicoController.merge(objetoSelecionado);
+		
+		//Para usar cascade todos objetos que estão no relacionamento devem estar completo (todos atributos, exeto id do objeto filho).
+		if (objetoSelecionado.getStatusOs().isEmpty()) {
+			Long idProduto = ordemServicoController.consultaIdOpInicial(objetoSelecionado.getProduto().getId().toString());
+			OperacaoProduto operacaoProduto = ordemServicoController.consultaOpInicial(idProduto.toString());
+			StatusO statusOs = new StatusO();
+			statusOs.setOperacaoProduto(operacaoProduto);
+			statusOs.setOrdemServico(objetoSelecionado);
+			objetoSelecionado.addStatusO(statusOs);
+			objetoSelecionado = ordemServicoController.merge(objetoSelecionado);
+		}
+		
 		list.add(objetoSelecionado);
 		objetoSelecionado = new OrdemServico();
 		sucesso();
-		// }
 	}
 
 	@Override
