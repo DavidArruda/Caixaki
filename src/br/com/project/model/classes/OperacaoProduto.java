@@ -39,6 +39,7 @@ public class OperacaoProduto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public OperacaoProduto() {
+	//CONSTRUTOR VAZIO
 	}
 
 	@Id
@@ -68,7 +69,12 @@ public class OperacaoProduto implements Serializable {
 
 	@NotAudited
 	@OneToMany(mappedBy = "operacaoProduto", cascade = CascadeType.ALL)
-	private List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<DimencaoInspecaoOperacao>();
+	private List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<>();
+	
+	//bi-directional many-to-one association to StatusO
+	@NotAudited
+	@OneToMany(mappedBy="operacaoProduto", cascade = CascadeType.ALL)
+	private List<StatusO> statusOs;
 
 	@Version
 	@Column(name = "versionNum")
@@ -129,7 +135,29 @@ public class OperacaoProduto implements Serializable {
 	public void setDimensoes(List<DimencaoInspecaoOperacao> dimensoes) {
 		this.dimensoes = dimensoes;
 	}
+	
+	public List<StatusO> getStatusOs() {
+		return this.statusOs;
+	}
 
+	public void setStatusOs(List<StatusO> statusOs) {
+		this.statusOs = statusOs;
+	}
+
+	public StatusO addStatusO(StatusO statusO) {
+		getStatusOs().add(statusO);
+		statusO.setOperacaoProduto(this);
+
+		return statusO;
+	}
+
+	public StatusO removeStatusO(StatusO statusO) {
+		getStatusOs().remove(statusO);
+		statusO.setOperacaoProduto(null);
+
+		return statusO;
+	}
+	
 	protected int getVersionNum() {
 		return versionNum;
 	}
@@ -164,7 +192,7 @@ public class OperacaoProduto implements Serializable {
 	}
 
 	public JSONObject getJson() {
-		Map<Object, Object> map = new HashMap<Object, Object>();
+		Map<Object, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("descricao", descricao);
 		return new JSONObject(map);
