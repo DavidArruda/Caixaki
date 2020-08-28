@@ -54,11 +54,11 @@ public class Produto implements Serializable {
 
 	@NotAudited
 	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<OperacaoProduto> operacoes = new ArrayList<OperacaoProduto>();
+	private List<OperacaoProduto> operacoes = new ArrayList<>();
 
 	@NotAudited
-	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
-	private List<OrdemServico> ordensServico = new ArrayList<OrdemServico>();
+	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<OrdemServico> ordensServico = new ArrayList<>();
 
 	@Version
 	@Column(name = "versionNum")
