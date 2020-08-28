@@ -20,4 +20,12 @@ public class DaoOperacaoProduto extends InplementacaoCrud<OperacaoProduto> imple
 		
 	}
 
+	@Override
+	public Long operacaoInicial(String idProduto) throws Exception {
+		return Long.parseLong(super.getSession().createQuery("select min(op.id) from OperacaoProduto op where op.produto = " + idProduto)
+				.uniqueResult().toString());
+	}
+	
+	
+
 }
