@@ -15,6 +15,6 @@ public class DaoStatusOs extends InplementacaoCrud<StatusO> implements Repositor
 	public void save(StatusO statusOs) throws Exception {
 		super.save(statusOs);
 	}
-	
+
 
 }
