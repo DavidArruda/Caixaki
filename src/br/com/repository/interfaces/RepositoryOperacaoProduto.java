@@ -5,6 +5,8 @@ import java.io.Serializable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.project.model.classes.OperacaoProduto;
+
 @Transactional
 @Repository
 public interface RepositoryOperacaoProduto extends Serializable {
@@ -16,7 +18,7 @@ public interface RepositoryOperacaoProduto extends Serializable {
 	 * @return Long
 	 * @throws Exception
 	 */
-	Long proximaOperacao(Long produtoId, Long idOperacaoAtual) throws Exception;
+	OperacaoProduto proximaOperacao(Long produtoId, Long idOperacaoAtual, int nOperacaoAtual) throws Exception;
 	
 	/**
 	 * Método que retorna o id(identificador) da primeira operação de um determinado produto.
