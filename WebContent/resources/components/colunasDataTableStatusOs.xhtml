@@ -85,18 +85,15 @@
 	</p:column>
 </sec:ifAnyGranted>
 
-<sec:ifAnyGranted roles="_EDITAR, ADMIN">
+<sec:ifAnyGranted roles="STATUS_OS, ADMIN">
 	<p:column style="width: 100px;">
 		<center>
 			<f:facet name="header">Apontar</f:facet>
-			<p:commandLink action="#{statusOsBeanView.editar}" update="@form"
-			 id="editar" ajax="true" immediate="true"
-				oncomplete="addFocoAoCampo('operacaoProduto');">
-				
+			<h:commandLink action="cad_apontamento.jsf" immediate="true">
 				<h:graphicImage library="img" name="editar16.png" />
-				<f:setPropertyActionListener value="#{objeto}"
-					target="#{statusOsBeanView.objetoSelecionado}" />
-			</p:commandLink>
+				<f:param name="statusOs"
+					value="#{objeto.id}" />
+			</h:commandLink>
 		</center>
 	</p:column>
 </sec:ifAnyGranted>
