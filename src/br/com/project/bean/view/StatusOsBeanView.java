@@ -14,7 +14,7 @@ import br.com.project.geral.controller.StatusOsController;
 import br.com.project.model.classes.StatusO;
 
 @Controller
-@Scope(value = "session")
+@Scope(value = "view")
 @ManagedBean(name = "statusOsBeanView")
 public class StatusOsBeanView extends BeanManagedViewAbstract {
 
