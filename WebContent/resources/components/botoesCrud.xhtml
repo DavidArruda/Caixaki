@@ -11,7 +11,8 @@
 	<composite:interface name="botoesCrud">
 		<composite:attribute name="managedBeanView" required="true"/>
 		<composite:attribute name="botaoNovo" required="false" default="true"/>
-		<composite:attribute name="botaoSalvar" required="false" default="true"/>
+		<composite:attribute name="botaoSalvar" required="false" default="false"/>
+		<composite:attribute name="botaoSalvarReturn" required="false" default="false"/>
 		<composite:attribute name="botaoAtualizar" required="false" default="true"/>
 		<composite:attribute name="botaoExcluir" required="false" default="true"/>
 		<composite:attribute name="camposReload" required="false"/>
@@ -38,8 +39,16 @@
 			process="@this, @form"
 			id="buttonSalvar"
 			immediate="false"
-			update="#{cc.attrs.camposReaload}">
+			update="#{cc.attrs.camposReaload}"
+			onsuccess="cc.attrs.managedBeanView.redirecionarFindStatusOs">
 		</p:commandButton>
+		
+		<h:commandButton value="SALVAR" 
+			style="height:30px; width:100px; background:#CDCDC1;border: 1px solid #FFFFFF;"
+			rendered="#{cc.attrs.botaoSalvarReturn}"
+			action="#{cc.attrs.managedBeanView.salvar}"
+			id="buttonSalvarReturn">
+		</h:commandButton>
 		
 		<p:commandButton value="ATUALIZAR"
 			style="height:30px; width:100px; background:#CDCDC1;border: 1px solid #FFFFFF;"
