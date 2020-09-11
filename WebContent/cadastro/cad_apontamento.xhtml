@@ -54,38 +54,15 @@
 						<h:outputLabel for="usuario" id="labelUser" value="Usuário * :" />
 						<p:inputText id="usuario" required="true" style="width:200px;"
 							requiredMessage="Informe o usuário."
-							value="#{apontamentoBeanView.objetoSelecionado.entidade.ent_codigo}">
+							value="#{apontamentoBeanView.objetoSelecionado.entidade.ent_nomefantasia}">
 						</p:inputText>
 						<p:message for="ordemServico" />
+						
 					</h:panelGrid>
 				</p:fieldset>
 				
 				<div class="espacoBranco" />
 				
-				<p:fieldset legend="Medição">
-					<h:panelGrid id="panelGridMedicao" columns="3">
-						<h:outputLabel for="idMedicao" value="Código:" id="labelIdMedicao" />
-						<p:inputText id="idMedicao" styleClass="estiloIdCadastro" disabled="true"
-							value="#{apontamentoBeanView.medicaoApontamento.id}" />
-						<h:outputLabel />
-
-						<h:outputLabel for="dataMedicao" value="Data medição * : " />
-						<p:calendar id="dataMedicao"
-							value="#{apontamentoBeanView.medicaoApontamento.dataMedicao}"
-							pattern="dd/MM/yyyy" locale="pt_BR" required="true"
-							requiredMessage="Informe a data da medição." />
-						<p:message for="dataMedicao" />
-
-						<h:outputLabel for="horarioMedicao" value="Horário medição * : " />
-						<p:calendar id="horarioMedicao" timeOnly="true"
-							value="#{apontamentoBeanView.medicaoApontamento.horarioMedicao}"
-							pattern="HH:mm:ss" locale="pt_BR" required="true"
-							requiredMessage="Informe o horário do apontamento." />
-						<p:message for="horarioMedicao" />
-					</h:panelGrid>
-					
-				</p:fieldset>
-
 			</p:panel>
 
 			<div class="espacoBranco" />
@@ -93,7 +70,7 @@
 			<util:botoesCrud managedBeanView="#{apontamentoBeanView}"
 				camposReload=":formTemplate:msg, tableResult"
 				botaoNovo="#{contextoBean.possuiAcesso('APONTAMENTO_NOVO', 'ADMIN')}"
-				botaoSalvar="#{contextoBean.possuiAcesso('APONTAMENTO_NOVO', 'ADMIN') and apontamentoBeanView.objetoSelecionado.id == null}"
+				botaoSalvarReturn="#{contextoBean.possuiAcesso('APONTAMENTO_NOVO', 'ADMIN') and apontamentoBeanView.objetoSelecionado.id == null}"
 				botaoAtualizar="#{contextoBean.possuiAcesso('APONTAMENTO_EDITAR', 'ADMIN') and apontamentoBeanView.objetoSelecionado.id != null}">
 
 			</util:botoesCrud>
