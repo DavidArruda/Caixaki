@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.springframework.stereotype.Service;
 
 import br.com.project.model.classes.Apontamento;
+import br.com.project.model.classes.StatusO;
 
 @Service
 public interface SrvApontamento extends Serializable{
@@ -15,17 +16,6 @@ public interface SrvApontamento extends Serializable{
 	 * @return Apontamento
 	 * @throws Exception
 	 */
-	Apontamento apontar(Apontamento apontamento) throws Exception;
+	Apontamento apontar(Apontamento apontamento, StatusO statusO) throws Exception;
 	
-	/**
-	 * Método para atualizar status da os.
-	 * @param idProduto
-	 * @param idOperacaoAtual
-	 * @return
-	 * @throws Exception
-	 */
-	Long atualizaStatusOs(Long idProduto, Long idOperacaoAtual) throws Exception;
-	
-	
-
 }
