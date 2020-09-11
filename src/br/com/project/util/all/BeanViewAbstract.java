@@ -44,7 +44,7 @@ public class BeanViewAbstract implements ActionViewPadrao { // ABSTRACT OBRIGA Q
 
 	@Override
 	public void limparLista() throws Exception {
-
+		//LIMPA LISTA
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class BeanViewAbstract implements ActionViewPadrao { // ABSTRACT OBRIGA Q
 
 	@Override
 	public void saveNotReturn() throws Exception {
-
+		//SALVAMENTO SEM RETORNO PARA OUTRA PÁGINA (ACTION LISTENER)
 	}
 
 	@Override
