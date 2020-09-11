@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,11 +37,11 @@ public class StatusO implements Serializable {
 	private Long id;
 
 	// bi-directional many-to-one association to Operacao
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private OperacaoProduto operacaoProduto;
 
 	// bi-directional many-to-one association to OrdemServico
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ordem_servico_id")
 	@IdentificaCampoPesquisa(descricaoCampo = "Nº O.S", campoConsulta = "ordemServico.id" , principal = 1)
 	private OrdemServico ordemServico = new OrdemServico();
@@ -115,5 +116,13 @@ public class StatusO implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "StatusO [id=" + id + ", operacaoProduto=" + operacaoProduto + ", ordemServico=" + ordemServico
+				+ ", versionNum=" + versionNum + "]";
+	}
+	
+	
 
 }
