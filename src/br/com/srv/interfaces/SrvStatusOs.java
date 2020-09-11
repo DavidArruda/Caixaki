@@ -7,6 +7,4 @@ import org.springframework.stereotype.Service;
 @Service
 public interface SrvStatusOs extends Serializable{
 	
-	Long atualizaStatusOs(Long idProduto, Long idOperacaoAtual) throws Exception;
-
 }
