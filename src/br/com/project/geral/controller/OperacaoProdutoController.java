@@ -15,7 +15,11 @@ public class OperacaoProdutoController extends InplementacaoCrud<OperacaoProduto
 
 	@Resource
 	private RepositoryOperacaoProduto repositoryOperacaoProduto;
-
+	
+	public OperacaoProduto consultarProximaOp(Long produtoId, Long idOperacaoAtual, int nOperacaoAtual) throws Exception {
+		return repositoryOperacaoProduto.proximaOperacao(produtoId, idOperacaoAtual, nOperacaoAtual);
+	}
+	
 	public void setRepositoryOperacaoProduto(RepositoryOperacaoProduto repositoryOperacaoProduto) {
 		this.repositoryOperacaoProduto = repositoryOperacaoProduto;
 	}
