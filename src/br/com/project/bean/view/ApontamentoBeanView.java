@@ -1,5 +1,6 @@
 package br.com.project.bean.view;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
 import org.primefaces.model.StreamedContent;
@@ -11,13 +12,17 @@ import br.com.framework.interfac.crud.InterfaceCrud;
 import br.com.project.bean.geral.BeanManagedViewAbstract;
 import br.com.project.carregamento.lazy.CarregamentoLazyListForObject;
 import br.com.project.geral.controller.ApontamentoController;
+import br.com.project.geral.controller.StatusOsController;
 import br.com.project.model.classes.Apontamento;
 import br.com.project.model.classes.MedicaoApontamento;
+import br.com.project.model.classes.StatusO;
 
 @Controller
-@Scope(value = "session")
+@Scope(value = "view")
 @ManagedBean(name = "apontamentoBeanView")
 public class ApontamentoBeanView extends BeanManagedViewAbstract {
+
+	private static final String FIND_STATUS_OS = "find_status_os";
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,14 +33,30 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 	private final String url = "/cadastro/cad_apontamento.jsf?faces-redirect=true";
 
 	private final String urlFind = "/cadastro/find_apontamento.jsf?faces-redirect=true";
-
+	
 	private CarregamentoLazyListForObject<Apontamento> list = new CarregamentoLazyListForObject<>();
 	
-	//private SrvOperacaoProduto SrvOperacaoProduto
-
+	private StatusO statusOs = new StatusO();
+	
+	@Autowired
+	private ContextoBean contextoBean;
+	
 	@Autowired
 	private ApontamentoController apontamentoController;
+	
+	@Autowired
+	private StatusOsController statusOsController;
 
+	@PostConstruct
+	public void init() throws Exception {
+		String idStatus = contextoBean.getExternalContext().getRequestParameterMap().get("statusOs");
+		if (idStatus != null) {
+			statusOs = (StatusO) statusOsController.findById(StatusO.class, Long.parseLong(idStatus));
+			objetoSelecionado.setOrdemServico(statusOs.getOrdemServico());
+			objetoSelecionado.setEntidade(contextoBean.getEntidadeLogada());
+		}
+	}
+	
 	@Override
 	public StreamedContent getArquivoReport() throws Exception {
 		super.setNomeRelatorioJasper("report_apontamento");
@@ -44,10 +65,11 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 		return super.getArquivoReport();
 	}
 
+	//falta redirecionar para página de status
 	@Override
 	public String salvar() throws Exception {
-		objetoSelecionado = apontamentoController.merge(objetoSelecionado);
-		return "";
+		objetoSelecionado = apontamentoController.apontarOs(objetoSelecionado, statusOs);
+		return FIND_STATUS_OS;
 	}
 
 	@Override
@@ -86,7 +108,7 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 	@Override
 	public void saveNotReturn() throws Exception {
 		list.clean();
-		objetoSelecionado = apontamentoController.merge(objetoSelecionado);
+		objetoSelecionado = apontamentoController.apontarOs(objetoSelecionado, statusOs);
 		list.add(objetoSelecionado);
 		objetoSelecionado = new Apontamento();
 		sucesso();
@@ -97,13 +119,17 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 	protected Class<Apontamento> getClassImplemt() {
 		return Apontamento.class;
 	}
+	
+	public String redirecionarFindStatusOs() {
+		return FIND_STATUS_OS;
+	}
 
 	@Override
 	public String redirecionarFindEntidade() throws Exception {
 		setarVariaveisNulas();
 		return urlFind;
 	}
-
+	
 	@Override
 	protected InterfaceCrud<?> getControler() {
 		return apontamentoController;
@@ -141,5 +167,13 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 	
 	public void setMedicaoApontamento(MedicaoApontamento medicaoApontamento) {
 		this.medicaoApontamento = medicaoApontamento;
+	}
+	
+	public StatusO getStatusOs() {
+		return statusOs;
+	}
+	
+	public void setStatusOs(StatusO statusOs) {
+		this.statusOs = statusOs;
 	}
 }
