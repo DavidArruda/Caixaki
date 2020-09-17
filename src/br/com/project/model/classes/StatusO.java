@@ -2,7 +2,6 @@ package br.com.project.model.classes;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +28,7 @@ import br.com.project.annotation.IdentificaCampoPesquisa;
 @Table(name = "status_os")
 @SequenceGenerator(name = "status_os_sequence", sequenceName = "status_os_sequence", allocationSize = 1, initialValue = 1)
 @NamedQuery(name = "StatusO.findAll", query = "SELECT s FROM StatusO s")
-public class StatusO implements Serializable {
+public class StatusO implements Serializable, Comparable<StatusO> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -37,11 +36,11 @@ public class StatusO implements Serializable {
 	private Long id;
 
 	// bi-directional many-to-one association to Operacao
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private OperacaoProduto operacaoProduto;
 
 	// bi-directional many-to-one association to OrdemServico
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ordem_servico_id")
 	@IdentificaCampoPesquisa(descricaoCampo = "Nº O.S", campoConsulta = "ordemServico.id" , principal = 1)
 	private OrdemServico ordemServico = new OrdemServico();
@@ -122,7 +121,22 @@ public class StatusO implements Serializable {
 		return "StatusO [id=" + id + ", operacaoProduto=" + operacaoProduto + ", ordemServico=" + ordemServico
 				+ ", versionNum=" + versionNum + "]";
 	}
-	
-	
 
+	/**
+	 * Compara 2 objetos StatusO. Ordena de forma decrescente apartir do nOperaracao
+	 * @param StatusO
+	 * @return int
+	 */
+	@Override
+	public int compareTo(StatusO outroStatusOs) {
+		if (this.getOperacaoProduto().getnOperacao() > outroStatusOs.getOperacaoProduto().getnOperacao()) {
+			return -1;
+			
+		} else if (this.getOperacaoProduto().getnOperacao() < outroStatusOs.getOperacaoProduto().getnOperacao()) {
+			return 1;
+		}
+		
+		return 0;
+	}
+	
 }
