@@ -33,57 +33,26 @@
 	</center>
 </p:column>
 
-<p:column style="width: 150px;">
+<p:column style="width: 100px;">
+	<f:facet name="header">Quantidade O.S</f:facet>
+	<center>
+		<h:outputText value="#{objeto.ordemServico.quantidade}" />
+	</center>
+</p:column>
+
+<p:column style="width: 100px;">
 	<f:facet name="header">Produto</f:facet>
 	<center>
 		<h:outputText value="#{objeto.ordemServico.produto.pn}" />
 	</center>
 </p:column>
 
-<p:column style="width: 200px;">
-	<f:facet name="header">Quantidade apontada</f:facet>
-	<center>
-		<h:outputText value="#{objeto.ordemServico.quantidade}" />
-	</center>
-</p:column>
-
-<p:column style="width:200px">
+<p:column style="width:100px">
 	<f:facet name="header">Nº Operação atual</f:facet>
 	<center>
 		<h:outputText value="#{objeto.operacaoProduto.nOperacao}" />
 	</center>
 </p:column>
-
-<sec:ifAnyGranted roles="APONTAMENTO_EXCLUIR, ADMIN">
-	<p:column style="width: 50px;">
-		<center>
-			<f:facet name="header">Excluir</f:facet>
-			<c:choose>
-				<c:when test="${isCadastro == false}">
-					<p:commandLink action="#{statusOsBeanView.excluir}"
-						update="tableResult" id="excluirStatusOs" ajax="true"
-						immediate="true"
-						onclick="if(!confirm('Confirmar exclusão do status da O.S: #{objeto.id}?')) return false">
-						<h:graphicImage library="img" name="excluir16.png" />
-						<f:setPropertyActionListener value="#{objeto}"
-							target="#{statusOsBeanView.objetoSelecionado}" />
-					</p:commandLink>
-				</c:when>
-
-				<c:otherwise>
-					<p:commandLink action="#{statusOsBeanView.excluir}"
-						update="tableResult" id="excluirApontamento" ajax="false"
-						immediate="true"
-						onclick="if(!confirm('Confirmar exclusão do status da O.S : #{objeto.id}?')) return false">
-						<h:graphicImage library="img" name="excluir16.png" />
-						<f:setPropertyActionListener value="#{objeto}"
-							target="#{statusOsBeanView.objetoSelecionado}" />
-					</p:commandLink>
-				</c:otherwise>
-			</c:choose>
-		</center>
-	</p:column>
-</sec:ifAnyGranted>
 
 <sec:ifAnyGranted roles="STATUS_OS, ADMIN">
 	<p:column style="width: 100px;">
