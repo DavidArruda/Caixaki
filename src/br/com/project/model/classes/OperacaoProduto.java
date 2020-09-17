@@ -198,11 +198,4 @@ public class OperacaoProduto implements Serializable {
 		return new JSONObject(map);
 	}
 
-	@Override
-	public String toString() {
-		return "OperacaoProduto [id=" + id + ", descricao=" + descricao + ", nOperacao=" + nOperacao + ", maquina="
-				+ maquina + ", tempoEstimado=" + tempoEstimado + ", produto=" + produto + ", dimensoes=" + dimensoes
-				+ "]";
-	}
-
 }
