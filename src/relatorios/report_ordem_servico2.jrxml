@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_cidade" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ca0ae7dc-53fe-440d-ac3c-5ca53349ad96">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Coleção Caixaki"/>
+	<parameter name="REPORT_PARAMETERS_IMG" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="produto" class="br.com.project.model.classes.Produto">
+		<fieldDescription><![CDATA[produto]]></fieldDescription>
+	</field>
+	<field name="dataEntrega" class="java.util.Date">
+		<fieldDescription><![CDATA[dataEntrega]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="dataEmissao" class="java.util.Date">
+		<fieldDescription><![CDATA[dataEmissao]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[quantidade]]></fieldDescription>
+	</field>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="220" height="40" uuid="f1da5000-030a-45ae-95db-5fe8b0347e1a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Ordem de Serviço]]></text>
+			</staticText>
+			<image>
+				<reportElement x="230" y="-1" width="239" height="42" uuid="84b1c338-6a35-4733-a21c-ab4b25062972"/>
+				<imageExpression><![CDATA[$P{REPORT_PARAMETERS_IMG} + "leaf_banner_violet.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="50" width="50" height="14" uuid="456ef510-9265-4632-879d-199e240602a5"/>
+				<text><![CDATA[Nº O.S]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="216" y="50" width="100" height="14" uuid="a8f52289-50a1-47e4-b1f0-5fb1bcc05697"/>
+				<textFieldExpression><![CDATA[$F{dataEmissao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="66" width="100" height="14" uuid="b30ccd0f-b672-4c4c-8a1d-cbaabe8ae7f9"/>
+				<textFieldExpression><![CDATA[$F{dataEntrega}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="140" y="50" width="76" height="14" uuid="b5e40a4b-f0f7-43a5-aa51-1329a6edc233"/>
+				<text><![CDATA[Data de emissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="66" width="76" height="14" uuid="b9734d5c-531f-4701-ad2e-99fe53b1848e"/>
+				<text><![CDATA[Data de entrega]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="66" width="80" height="14" uuid="d22cf439-cf68-486a-aeda-4153a3ccebd2"/>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="50" width="80" height="14" uuid="4adcd3d3-7a33-424d-aad8-714099c59d7c"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="66" width="50" height="14" uuid="0c5768b8-d377-4832-b2bc-512fa3febc40"/>
+				<text><![CDATA[QTD Peça]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>
