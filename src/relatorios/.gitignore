@@ -2,3 +2,6 @@
 /report_cidade.jasper
 /report_funcionario.jasper
 /report_funcionario_subreport.jasper
+/report_ordem_servico.jasper
+/report_codigo_barras.jasper
+/report_ordem_servico_all.jasper
