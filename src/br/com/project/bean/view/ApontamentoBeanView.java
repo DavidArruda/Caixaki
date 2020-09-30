@@ -30,9 +30,9 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 	
 	private MedicaoApontamento medicaoApontamento = new MedicaoApontamento();
 
-	private final String url = "/cadastro/cad_apontamento.jsf?faces-redirect=true";
+	private static final String URL = "/cadastro/cad_apontamento.jsf?faces-redirect=true";
 
-	private final String urlFind = "/cadastro/find_apontamento.jsf?faces-redirect=true";
+	private static final String URL_FIND = "/cadastro/find_apontamento.jsf?faces-redirect=true";
 	
 	private CarregamentoLazyListForObject<Apontamento> list = new CarregamentoLazyListForObject<>();
 	
@@ -65,7 +65,6 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 		return super.getArquivoReport();
 	}
 
-	//falta redirecionar para página de status
 	@Override
 	public String salvar() throws Exception {
 		objetoSelecionado = apontamentoController.apontarOs(objetoSelecionado, statusOs);
@@ -81,7 +80,7 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 	@Override
 	public String editar() throws Exception {
 		list.clean();
-		return url;
+		return URL;
 	}
 
 	@Override
@@ -102,7 +101,7 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 	@Override
 	public String novo() throws Exception {
 		setarVariaveisNulas();
-		return url;
+		return URL;
 	}
 
 	@Override
@@ -127,11 +126,11 @@ public class ApontamentoBeanView extends BeanManagedViewAbstract {
 	@Override
 	public String redirecionarFindEntidade() throws Exception {
 		setarVariaveisNulas();
-		return urlFind;
+		return URL_FIND;
 	}
 	
 	@Override
-	protected InterfaceCrud<?> getControler() {
+	protected InterfaceCrud<Apontamento> getControler() {
 		return apontamentoController;
 	}
 
