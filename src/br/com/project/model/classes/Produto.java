@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,6 +30,7 @@ import br.com.project.annotation.IdentificaCampoPesquisa;
 @Entity
 @Table(name = "produto")
 @SequenceGenerator(name = "produto_sequence", sequenceName = "produto_sequence", initialValue = 1, allocationSize = 1)
+@NamedQuery(name="Produto.findAll", query="SELECT p FROM Produto p")
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -53,7 +55,7 @@ public class Produto implements Serializable {
 	private String descricao;
 
 	@NotAudited
-	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<OperacaoProduto> operacoes = new ArrayList<>();
 
 	@NotAudited
@@ -64,6 +66,10 @@ public class Produto implements Serializable {
 	@Column(name = "versionNum")
 	private int versionNum;
 
+	public Produto() {
+		// CONSTRUTOR VAZIO
+	}
+	
 	public Long getId() {
 		return id;
 	}
