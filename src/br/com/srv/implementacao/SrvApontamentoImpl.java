@@ -1,5 +1,8 @@
 package br.com.srv.implementacao;
 
+import java.math.BigInteger;
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,61 +18,68 @@ import br.com.srv.interfaces.SrvApontamento;
 public class SrvApontamentoImpl implements SrvApontamento {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	RepositoryApontamento repositoryApontamento;
-	
+
 	@Autowired
 	StatusOsController statusOsController;
-	
+
 	@Autowired
 	OperacaoProdutoController operacaoProdutoController;
-	
-	private Apontamento auxApontamento = new Apontamento();
-	
+
 	@Override
 	public Apontamento apontar(Apontamento apontamento, StatusO statusOs) throws Exception {
+
 		try {
-			if (apontamento.getQuantidade().equals(apontamento.getOrdemServico().getQuantidade())) {
-				auxApontamento = apontarEatualizarStatus(apontamento, statusOs);
+			var listaStatusOrdenada = statusOsController
+					.consultarStatusPorOs(apontamento.getOrdemServico().getId().toString());
+			Collections.sort(listaStatusOrdenada);
+
+			if (listaStatusOrdenada.size() > 1 && statusOs.getOperacaoProduto().getnOperacao() < listaStatusOrdenada
+					.get(0).getOperacaoProduto().getnOperacao()) {
+				statusOsController.deletarComCondicao(BigInteger.valueOf(statusOs.getId()));
+				return repositoryApontamento.apontar(apontamento);
+
+			} else if (apontamento.getQuantidade().equals(apontamento.getOrdemServico().getQuantidade())) {
+				return apontarEatualizarStatus(apontamento, statusOs);
 
 			} else if (apontamento.getQuantidade() < apontamento.getOrdemServico().getQuantidade()) {
-				auxApontamento = apontarEatualizarStatus(apontamento, statusOs); // APONTAMENTO COM A QTD MENOR
-				apontarQtdRestante(apontamento, statusOs);
+				var auxStatus = statusOs;
+				auxStatus.setId(null);
+				apontarQtdRestante(apontamento);
+				return apontarEatualizarStatus(apontamento, auxStatus); // APONTAMENTO COM A QTD MENOR
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			HibernateUtil.getConnection().rollback();
 		}
-		return auxApontamento;
+
+		return null;
 	}
 
 	/**
 	 * Gera um novo apontamento. Gera um novo status e continua na mesma operação.
+	 * 
 	 * @param apontamento
 	 * @param statusOs
 	 * @throws Exception
-	 * @return  void
+	 * @return void
 	 * @author David Arruda
 	 */
-	private Apontamento apontarQtdRestante(Apontamento apontamento, StatusO statusOs) throws Exception {
+	private void apontarQtdRestante(Apontamento apontamento) throws Exception {
 		// RESTANTE DA QUANTIDADE. O.S CONTINUA NO MESMO STATUS
 		var qtdRestaste = (apontamento.getOrdemServico().getQuantidade() - apontamento.getQuantidade());
 		apontamento.setQuantidade(qtdRestaste);
 
 		// APONTAMENTO COM A QTD RESTANTE
-		apontamento = repositoryApontamento.apontar(apontamento);
-
-		// GERA UM NOVO STATUS PARA A O.S
-		statusOs.setId(null);
-		apontamento.getOrdemServico().getStatusOs().add(statusOsController.merge(statusOs));
-		
-		return apontamento;
+		repositoryApontamento.apontar(apontamento);
 	}
 
 	/**
 	 * Gera um novo apontamento e atualiza o status da o.s com a próxima operação.
+	 * 
 	 * @param apontamento
 	 * @param statusOs
 	 * @throws Exception
@@ -77,19 +87,18 @@ public class SrvApontamentoImpl implements SrvApontamento {
 	 * @author David Arruda
 	 */
 	private Apontamento apontarEatualizarStatus(Apontamento apontamento, StatusO statusOs) throws Exception {
-		//GERA NOVO APONTAMENTO
+		// GERA NOVO APONTAMENTO
 		apontamento = repositoryApontamento.apontar(apontamento);
-		
-		//CONSULTA A PRÓXIMA OPERACÃO
-		statusOs.setOperacaoProduto(operacaoProdutoController.consultarProximaOp(
-				statusOs.getOrdemServico().getProduto().getId(),
-				statusOs.getOperacaoProduto().getId(),
-				statusOs.getOperacaoProduto().getnOperacao()));
-		
-		//ATUALIZA O STATUS DA O.S
-		apontamento.getOrdemServico().getStatusOs().add(statusOsController.merge(statusOs));
-		
+
+		// CONSULTA A PRÓXIMA OPERACÃO
+		statusOs.setOperacaoProduto(
+				operacaoProdutoController.consultarProximaOp(statusOs.getOrdemServico().getProduto().getId(),
+						statusOs.getOperacaoProduto().getId(), statusOs.getOperacaoProduto().getnOperacao()));
+
+		// GERA UM NOVO STATUS PARA A O.S
+		statusOsController.merge(statusOs);
+
 		return apontamento;
 	}
-	
+
 }
