@@ -23,6 +23,7 @@ public abstract class BeanReportView extends BeanViewAbstract {
 	protected String nomeRelatorioJasper = "default";
 	protected String nomeRelatorioSaida = "default";
 
+	@SuppressWarnings("deprecation")
 	@Resource
 	private ReportUtil reportUtil;
 
@@ -32,20 +33,22 @@ public abstract class BeanReportView extends BeanViewAbstract {
 		listDataBeanCollectionReport = new ArrayList();
 	}
 
+	@SuppressWarnings("deprecation")
 	public ReportUtil getReportUtil() {
 		return reportUtil;
 	}
 
-	public void setReportUtil(ReportUtil reportUtil) {
+	public void setReportUtil(@SuppressWarnings("deprecation") ReportUtil reportUtil) {
 		this.reportUtil = reportUtil;
 	}
 
-	public StreamedContent getArquivoReport() throws Exception {
+	@SuppressWarnings("deprecation")
+	public StreamedContent getArquivoReport() throws Exception{
 		return getReportUtil().geraRelatorio(getListDataBeanCollectionReport(),
 				getParametrosRelatorio(), getNomeRelatorioJasper(),
 				getNomeRelatorioSaida(), getTipoRelatorio());
 	}
-
+	
 	public int getTipoRelatorio() {
 		return tipoRelatorio;
 	}
