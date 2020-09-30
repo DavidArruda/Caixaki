@@ -42,6 +42,22 @@
 	</center>
 </p:column>
 
+<sec:ifAnyGranted roles="PCP_EDITAR, ADMIN">		
+	<p:column style="width:50px;">
+		<center>
+			<f:facet name="header">Imprimir</f:facet>
+			<h:commandLink immediate="true" id="ImprimirOrdemServico">
+				<f:setPropertyActionListener value="#{objeto}"
+					target="#{ordemServicoBeanView.objetoSelecionado}" />
+				<p:fileDownload value="#{ordemServicoBeanView.arquivoReport}" />
+				<h:graphicImage library="img" name="pdf.png"
+					styleClass="bordaImagem" />
+			</h:commandLink>
+
+		</center>
+	</p:column>
+</sec:ifAnyGranted>
+
 
 <sec:ifAnyGranted roles="PCP_EXCLUIR, ADMIN">		
 	<p:column style="width:50px;">
