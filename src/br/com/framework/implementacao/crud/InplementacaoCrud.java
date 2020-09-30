@@ -280,4 +280,13 @@ public class InplementacaoCrud<T> implements InterfaceCrud<T> {
 		return obj;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findListUniqueObj(Class<T> entidade, Long id) throws Exception {
+		T obj = (T) this.findById(entidade, id);
+		List<T> list = new ArrayList<>();
+		list.add(obj);
+		return list;
+	}
+
 }
