@@ -50,11 +50,12 @@ public class OrdemServicoBeanView extends BeanManagedViewAbstract {
 		return produtoController.pesquisarProduto(pn);
 	}
 
-	@Override
+		@Override
 	public StreamedContent getArquivoReport() throws Exception {
-		super.setNomeRelatorioJasper("report_ordem_servico");
-		super.setNomeRelatorioSaida("report_ordem_servico");
-		super.setListDataBeanCollectionReport(ordemServicoController.findList(getClassImplemt()));
+		setTipoRelatorio(1);
+		super.setNomeRelatorioJasper("report_ordem_servico_all");
+		super.setNomeRelatorioSaida("report_ordem_servico_all");
+		super.setListDataBeanCollectionReport(ordemServicoController.findListUniqueObj(getClassImplemt(), objetoSelecionado.getId()));
 		return super.getArquivoReport();
 	}
 
