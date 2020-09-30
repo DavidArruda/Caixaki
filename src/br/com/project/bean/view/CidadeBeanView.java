@@ -12,6 +12,8 @@ import br.com.project.bean.geral.BeanManagedViewAbstract;
 import br.com.project.carregamento.lazy.CarregamentoLazyListForObject;
 import br.com.project.geral.controller.CidadeController;
 import br.com.project.model.classes.Cidade;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRRuntimeException;
 
 @Controller
 @Scope(value = "session")
@@ -32,13 +34,13 @@ public class CidadeBeanView extends BeanManagedViewAbstract {
 	private CidadeController cidadeController;
 
 	@Override
-	public StreamedContent getArquivoReport() throws Exception {
+	public StreamedContent getArquivoReport() throws Exception, JRException, JRRuntimeException {
 		super.setNomeRelatorioJasper("report_cidade");
 		super.setNomeRelatorioSaida("report_cidade");
 		super.setListDataBeanCollectionReport(cidadeController.findList(getClassImplemt()));
 		return super.getArquivoReport();
 	}
-
+	
 	@Override
 	public String salvar() throws Exception {
 		objetoSelecionado = cidadeController.merge(objetoSelecionado);
