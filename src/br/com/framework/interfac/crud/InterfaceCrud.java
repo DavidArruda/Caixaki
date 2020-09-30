@@ -67,6 +67,22 @@ public interface InterfaceCrud<T> extends Serializable{
 	List<T> findList(Class<T> objs) throws Exception;
 	
 	/**
+	 * Retorna uma lista de dados de uma determinada classe
+	 * @param objs
+	 * @return List<T>
+	 * @throws Exception
+	 */
+	
+	/**
+	 * Retorna um objeto específico dentro de uma lista
+	 * @param entidade
+	 * @param id
+	 * @return List<T>
+	 * @throws Exception
+	 */
+	List<T> findListUniqueObj(Class<T> entidade, Long id) throws Exception;
+	
+	/**
 	 * Busca por id
 	 * @param entidade
 	 * @param id
