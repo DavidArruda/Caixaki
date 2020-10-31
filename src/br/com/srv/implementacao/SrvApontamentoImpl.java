@@ -6,7 +6,6 @@ import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.framework.hibernate.session.HibernateUtil;
 import br.com.project.geral.controller.OperacaoProdutoController;
 import br.com.project.geral.controller.StatusOsController;
 import br.com.project.model.classes.Apontamento;
@@ -31,32 +30,26 @@ public class SrvApontamentoImpl implements SrvApontamento {
 	@Override
 	public Apontamento apontar(Apontamento apontamento, StatusO statusOs) throws Exception {
 
-		try {
-			var listaStatusOrdenada = statusOsController
-					.consultarStatusPorOs(apontamento.getOrdemServico().getId().toString());
-			Collections.sort(listaStatusOrdenada);
+		var listaStatusOrdenada = statusOsController
+				.consultarStatusPorOs(apontamento.getOrdemServico().getId().toString());
+		Collections.sort(listaStatusOrdenada);
 
-			if (listaStatusOrdenada.size() > 1 && statusOs.getOperacaoProduto().getnOperacao() < listaStatusOrdenada
-					.get(0).getOperacaoProduto().getnOperacao()) {
-				statusOsController.deletarComCondicao(BigInteger.valueOf(statusOs.getId()));
-				return repositoryApontamento.apontar(apontamento);
+		//JUNTAR STATUS DA O.S
+		if (listaStatusOrdenada.size() > 1 && statusOs.getOperacaoProduto().getnOperacao() < listaStatusOrdenada.get(0)
+				.getOperacaoProduto().getnOperacao()) {
+			statusOsController.deletarComCondicao(BigInteger.valueOf(statusOs.getId()));
+			return repositoryApontamento.apontar(apontamento);
 
-			} else if (apontamento.getQuantidade().equals(apontamento.getOrdemServico().getQuantidade())) {
-				return apontarEatualizarStatus(apontamento, statusOs);
+		} else if (apontamento.getQuantidade() < apontamento.getOrdemServico().getQuantidade()) {
+			var auxStatus = statusOs;
+			auxStatus.setId(null);
+			apontarQtdRestante(apontamento);
+			return apontarEatualizarStatus(apontamento, auxStatus); // APONTAMENTO COM A QTD MENOR
 
-			} else if (apontamento.getQuantidade() < apontamento.getOrdemServico().getQuantidade()) {
-				var auxStatus = statusOs;
-				auxStatus.setId(null);
-				apontarQtdRestante(apontamento);
-				return apontarEatualizarStatus(apontamento, auxStatus); // APONTAMENTO COM A QTD MENOR
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			HibernateUtil.getConnection().rollback();
+		} else {
+			return apontarEatualizarStatus(apontamento, statusOs);
 		}
 
-		return null;
 	}
 
 	/**
