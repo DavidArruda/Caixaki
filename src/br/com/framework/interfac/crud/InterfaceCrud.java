@@ -197,4 +197,15 @@ public interface InterfaceCrud<T> extends Serializable{
 	 */
 	List<T> findListByQueryDinamica(String query, int iniciaNoRegistro, int maximoResultado) throws Exception;
 	
+	/**
+	 * Retorna uma List de acordo com as condições informada.
+	 * @param entidade
+	 * @param valor
+	 * @param atributo
+	 * @param condicao
+	 * @return Set<T>
+	 * @throws Exception
+	 */
+	List<T> findListUniqueByProperty(Class<T> entidade, Object valor, String atributo, String condicao) throws Exception;
+	
 }
