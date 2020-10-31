@@ -279,7 +279,7 @@ public class InplementacaoCrud<T> implements InterfaceCrud<T> {
 
 		return obj;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findListUniqueObj(Class<T> entidade, Long id) throws Exception {
@@ -288,5 +288,30 @@ public class InplementacaoCrud<T> implements InterfaceCrud<T> {
 		list.add(obj);
 		return list;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findListUniqueByProperty(Class<T> entidade, Object valor, String atributo, String condicao) throws Exception {
+		validaSessionFactory();
+
+		StringBuilder query = new StringBuilder();
+		query.append(" select entity from ").append(entidade.getSimpleName())
+		.append(" entity where entity.").append(atributo)
+		.append(" = '").append(valor).append("' ").append(condicao);
+		
+		return sessionFactory.getCurrentSession().createQuery(query.toString()).list();
+
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
