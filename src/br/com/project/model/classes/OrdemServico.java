@@ -20,6 +20,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.ForeignKey;
@@ -65,6 +66,9 @@ public class OrdemServico implements Serializable {
 	// bi-directional many-to-one association to Apontamento
 	@OneToMany(mappedBy = "ordemServico", cascade = CascadeType.ALL)
 	private List<Apontamento> apontamentos = new ArrayList<>();
+	
+	@Transient
+	private List<OperacaoProduto> operacoesReport = new ArrayList<>();
 
 	@Version
 	@Column(name = "versionNum")
@@ -152,6 +156,14 @@ public class OrdemServico implements Serializable {
 		statusO.setOrdemServico(null);
 
 		return statusO;
+	}
+	
+	public List<OperacaoProduto> getOperacoesReport() {
+		return operacoesReport;
+	}
+	
+	public void setOperacoesReport(List<OperacaoProduto> operacoesReport) {
+		this.operacoesReport = operacoesReport;
 	}
 
 	protected int getVersionNum() {
