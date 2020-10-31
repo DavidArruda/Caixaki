@@ -50,12 +50,11 @@ public class OrdemServicoBeanView extends BeanManagedViewAbstract {
 		return produtoController.pesquisarProduto(pn);
 	}
 
-		@Override
+	@Override
 	public StreamedContent getArquivoReport() throws Exception {
 		setTipoRelatorio(1);
-		super.setNomeRelatorioJasper("report_ordem_servico_all");
-		super.setNomeRelatorioSaida("report_ordem_servico_all");
-		super.setListDataBeanCollectionReport(ordemServicoController.findListUniqueObj(getClassImplemt(), objetoSelecionado.getId()));
+		super.setNomeRelatorioJasper("report_ordem_servico_sql");
+		super.setNomeRelatorioSaida("report_ordem_servico_sql");
 		return super.getArquivoReport();
 	}
 
@@ -94,10 +93,12 @@ public class OrdemServicoBeanView extends BeanManagedViewAbstract {
 	public void saveNotReturn() throws Exception {
 		list.clean();
 		objetoSelecionado = ordemServicoController.merge(objetoSelecionado);
-		
-		//Para usar cascade todos objetos que estão no relacionamento devem estar completo (todos atributos, exeto id do objeto filho).
+
+		// Para usar cascade todos objetos que estão no relacionamento devem estar
+		// completo (todos atributos, exeto id do objeto filho).
 		if (objetoSelecionado.getStatusOs().isEmpty()) {
-			Long idProduto = ordemServicoController.consultaIdOpInicial(objetoSelecionado.getProduto().getId().toString());
+			Long idProduto = ordemServicoController
+					.consultaIdOpInicial(objetoSelecionado.getProduto().getId().toString());
 			OperacaoProduto operacaoProduto = ordemServicoController.consultaOpInicial(idProduto.toString());
 			StatusO statusOs = new StatusO();
 			statusOs.setOperacaoProduto(operacaoProduto);
@@ -105,7 +106,7 @@ public class OrdemServicoBeanView extends BeanManagedViewAbstract {
 			objetoSelecionado.addStatusO(statusOs);
 			objetoSelecionado = ordemServicoController.merge(objetoSelecionado);
 		}
-		
+
 		list.add(objetoSelecionado);
 		objetoSelecionado = new OrdemServico();
 		sucesso();
