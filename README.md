@@ -11,9 +11,7 @@ Versão do Java: Java 11.
 
 Frameworks utilizados: Java server faces (JSF), Primefaces, Spring framework, Spring security, Hibernate, Hibernate envers, Flyway.
 
-Bibliotecas
-Jasper Reports 6.10.
+Bibliotecas: Jasper Reports 6.10.
 
-Banco de dados
-PostgreSQL 9.5.
+Banco de dados: PostgreSQL 9.5.
 
