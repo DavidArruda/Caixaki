@@ -7,8 +7,7 @@ Após a análise da regra de negócio utilizada pela empresa, foi determinado as
 
 Para persistir os dados foi utilizado o SGBD (Sistema de gerenciamento de banco de dados) PostgreSQL, na versão 9, este SGBD atualmente é um dos mais avançados, contando com recursos como, suporte ao modelo híbrido objeto-relacional, controle de concorrência multi-versão, estrutura para guardar dados Georreferenciados (PostGIS), entre outros recursos. 
 
-Versão do Java
-Java 11.
+Versão do Java: Java 11.
 
 Frameworks utilizados: Java server faces (JSF), Primefaces, Spring framework, Spring security, Hibernate, Hibernate envers, Flyway.
 
