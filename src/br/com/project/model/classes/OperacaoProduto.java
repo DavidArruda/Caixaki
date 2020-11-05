@@ -68,7 +68,7 @@ public class OperacaoProduto implements Serializable {
 	private Produto produto = new Produto();
 
 	@NotAudited
-	@OneToMany(mappedBy = "operacaoProduto", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "operacaoProduto", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<>();
 	
 	//bi-directional many-to-one association to StatusO
@@ -135,6 +135,19 @@ public class OperacaoProduto implements Serializable {
 	public void setDimensoes(List<DimencaoInspecaoOperacao> dimensoes) {
 		this.dimensoes = dimensoes;
 	}
+	
+	public DimencaoInspecaoOperacao addDimencao(DimencaoInspecaoOperacao dimencao) {
+		getDimensoes().add(dimencao);
+		dimencao.setOperacaoProduto(this);
+		return dimencao;
+	}
+
+	public DimencaoInspecaoOperacao removeDimencao(DimencaoInspecaoOperacao dimencao) {
+		getDimensoes().remove(dimencao);
+		dimencao.setOperacaoProduto(null);
+		return dimencao;
+	}
+	
 	
 	public List<StatusO> getStatusOs() {
 		return this.statusOs;
