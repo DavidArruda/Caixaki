@@ -62,7 +62,32 @@
 				</p:fieldset>
 				
 				<div class="espacoBranco" />
-				
+
+				<p:fieldset legend="Medição">
+					<h:panelGrid id="panelGridMedicao" columns="3">
+						<h:outputLabel for="idMedicao" value="Código:" id="labelIdMedicao" />
+						<p:inputText id="idMedicao" styleClass="estiloIdCadastro"
+							disabled="true"
+							value="#{apontamentoBeanView.medicaoApontamento.id}" />
+						<h:outputLabel />
+
+						<h:outputLabel for="dataMedicao" value="Data medição * : " />
+						<p:calendar id="dataMedicao"
+							value="#{apontamentoBeanView.medicaoApontamento.dataMedicao}"
+							pattern="dd/MM/yyyy" locale="pt_BR" required="true"
+							requiredMessage="Informe a data da medição." />
+						<p:message for="dataMedicao" />
+
+						<h:outputLabel for="horarioMedicao" value="Horário medição * : " />
+						<p:calendar id="horarioMedicao" timeOnly="true"
+							value="#{apontamentoBeanView.medicaoApontamento.horarioMedicao}"
+							pattern="HH:mm:ss" locale="pt_BR" required="true"
+							requiredMessage="Informe o horário do apontamento." />
+						<p:message for="horarioMedicao" />
+					</h:panelGrid>
+
+				</p:fieldset>
+
 			</p:panel>
 
 			<div class="espacoBranco" />
