@@ -1,6 +1,5 @@
 package br.com.project.geral.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,10 +34,18 @@ public class DimencaoInspecaoOperacaoController extends InplementacaoCrud<Dimenc
 	 * @throws Exception
 	 */
 	public List<DimencaoInspecaoOperacao> findByOperacao(String idOperacao) throws Exception {
-		List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<>();
-		dimensoes = super.findListByQueryDynamic("from DimencaoInspecaoOperacao as dimencao left join dimencao.operacaoProduto as op with op.id = " + idOperacao);
-			
+		 List<DimencaoInspecaoOperacao> dimensoes = super.findListByQueryDynamic("from DimencaoInspecaoOperacao as dimencao left join dimencao.operacaoProduto as op with op.id = " + idOperacao);
 		return dimensoes;
+	}
+	
+	/**
+	 * Retorna um ArrayList de DimencaoInspecaoOperacao por operaçãoProduto, usa parameter (evita sql injection)
+	 * @param idOperacao
+	 * @return List<DimencaoInspecaoOperacao>
+	 * @throws Exception
+	 */
+	public List<DimencaoInspecaoOperacao> findListByOperacao(Long idOperacao) throws Exception {
+		return repositoryDimencaoInspecaoOperacao.findByOperacaoId(idOperacao);
 	}
 
 	public void saveSQLNative(DimencaoInspecaoOperacao dimencaoInspecaoOperacao) throws Exception {
