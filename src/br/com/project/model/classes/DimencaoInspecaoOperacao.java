@@ -41,7 +41,7 @@ public class DimencaoInspecaoOperacao implements Serializable {
 	private String nCota;
 
 	@Column(precision = 9, scale = 3, nullable = false)
-	private BigDecimal valor;
+	private BigDecimal valor = new BigDecimal("0");
 
 	@IdentificaCampoPesquisa(descricaoCampo = "Tolerância", campoConsulta = "tolerancia")
 	@Column(length = 12, nullable = false)
