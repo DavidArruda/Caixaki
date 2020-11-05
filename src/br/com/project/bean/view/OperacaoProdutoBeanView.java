@@ -27,23 +27,25 @@ import br.com.project.model.classes.Produto;
 @Scope("session")
 @ManagedBean(name = "operacaoProdutoBeanView")
 public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
+	@Autowired
+	private OperacaoProdutoController operacaoProdutoController;
+	
+	@Autowired
+	private ProdutoController produtoController;
+	
+	@Autowired
+	ContextoBean contextoBean;
+	
+	@Autowired
+	DimencaoInspecaoOperacaoController dimencaoInspecaoOperacaoController;
 
 	private static final long serialVersionUID = 1L;
 	private CarregamentoLazyListForObject<DimencaoInspecaoOperacao> list = new CarregamentoLazyListForObject<>();
 	private OperacaoProduto objetoSelecionado = new OperacaoProduto();
 	private DimencaoInspecaoOperacao dimencaoInspecaoOperacao = new DimencaoInspecaoOperacao();
-	private List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<DimencaoInspecaoOperacao>();
-	private String url = "/cadastro/cad_operacao_produto.jsf?faces-redirect=true";
+	private List<DimencaoInspecaoOperacao> dimensoes = new ArrayList<>();
+	private static final String  URL = "/cadastro/cad_operacao_produto.jsf?faces-redirect=true";
 	private String urlFind = "/cadastro/find_operacao_produto.jsf?faces-redirect=true";
-
-	@Autowired
-	private OperacaoProdutoController operacaoProdutoController;
-
-	@Autowired
-	ProdutoController produtoController;
-
-	@Autowired
-	DimencaoInspecaoOperacaoController dimencaoInspecaoOperacaoController;
 	
 	public List<DimencaoInspecaoOperacao> getDimensoes() {
 		return dimensoes;
@@ -100,7 +102,7 @@ public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 	@Override
 	public String novo() throws Exception {
 		setarVariaveisNulas();
-		return url;
+		return URL;
 	}
 
 	public OperacaoProduto getObjetoSelecionado() {
@@ -119,17 +121,13 @@ public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 	}
 
 	public void addDimencao() {
-		dimencaoInspecaoOperacao.setOperacaoProduto(objetoSelecionado);
-		objetoSelecionado.getDimensoes().add(dimencaoInspecaoOperacao);
-		dimensoes.add(dimencaoInspecaoOperacao);
+		objetoSelecionado.addDimencao(dimencaoInspecaoOperacao);
 		dimencaoInspecaoOperacao = new DimencaoInspecaoOperacao();
 	}
 
 	@Override
 	public void saveNotReturn() throws Exception {
 		objetoSelecionado = operacaoProdutoController.merge(objetoSelecionado);
-		dimensoes.clear();
-		dimencaoInspecaoOperacao = new DimencaoInspecaoOperacao();
 		sucesso();
 	}
 
@@ -167,7 +165,8 @@ public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 	public String editar() throws Exception {
 		valorPesquisa = "";
 		list.clean();
-		return url;
+		dimensoes = objetoSelecionado.getDimensoes();
+		return URL;
 	}
 
 	@Override
