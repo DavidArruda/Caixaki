@@ -26,7 +26,7 @@ import br.com.project.model.classes.Produto;
 @Controller
 @Scope("session")
 @ManagedBean(name = "operacaoProdutoBeanView")
-public class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
+public final class OperacaoProdutoBeanView extends BeanManagedViewAbstract {
 	@Autowired
 	private OperacaoProdutoController operacaoProdutoController;
 	
