@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.text.StrBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,12 +21,12 @@ public class TituloController extends InplementacaoCrud<Titulo> implements Inter
 	/**
 	 * 
 	 */
-	//@ResponseBody RESPOSDE A REQUISIÇÃO AJAX QUE SERÁ FEITA.
+	//@ResponseBody RESPOSDE A REQUISIï¿½ï¿½O AJAX QUE SERï¿½ FEITA.
 	@RequestMapping("**/gerarGraficoInicial")
 	public @ResponseBody String gerarGraficoInicial(@RequestParam(value = "dias") int dias) {
 		
-		//MAP É UMA LISTA QUE IDENTIFICA OS VALORES APARTIR DA CHAVE.
-		//NESTE CASO CHAVE SÃO AS COLUNAS DA CONSULTA SQL.
+		//MAP ï¿½ UMA LISTA QUE IDENTIFICA OS VALORES APARTIR DA CHAVE.
+		//NESTE CASO CHAVE Sï¿½O AS COLUNAS DA CONSULTA SQL.
 		
 		List<Map<String, Object>> tituloUltimosDias = getTituloUltimosDias(dias);
 		
@@ -44,10 +43,10 @@ public class TituloController extends InplementacaoCrud<Titulo> implements Inter
 		}
 		
 		if (semDados) {
-			dados[cont++] = "[\"" + "tipo" + "\"," + "\"" + "Quantidade" + "\"," + "\"" + "Média" + "\"]";
+			dados[cont++] = "[\"" + "tipo" + "\"," + "\"" + "Quantidade" + "\"," + "\"" + "Mï¿½dia" + "\"]";
 
 		} else {
-			dados[cont] = "[\"" + "tipo" + "\"," + "\"" + "Quantidade" + "\"," + "\"" + "Média" + "\"]";
+			dados[cont] = "[\"" + "tipo" + "\"," + "\"" + "Quantidade" + "\"," + "\"" + "Mï¿½dia" + "\"]";
 			cont ++;
 			
 			for (Map<String, Object> objeto : tituloUltimosDias) {
@@ -64,7 +63,7 @@ public class TituloController extends InplementacaoCrud<Titulo> implements Inter
 	}
 
 	/**
-	 * Método para consultar dados que irão preencher o grafico de títulos.
+	 * Mï¿½todo para consultar dados que irï¿½o preencher o grafico de tï¿½tulos.
 	 * @param dias
 	 * @return List<Map<String, Object>>
 	 */
